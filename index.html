@@ -2,617 +2,656 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zala AI — Agency OS</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Cabinet+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Zala Digital — Agency OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f2ee;
-  --surface: #ffffff;
-  --surface2: #f0ece6;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.14);
-  --ink: #1a1714;
-  --ink2: #6b6560;
-  --ink3: #a09a94;
-  --accent: #c8602a;
-  --accent-bg: #fdf0e8;
-  --accent-border: rgba(200,96,42,0.25);
-  --green: #2a7a4b;
-  --green-bg: #e8f5ee;
-  --green-border: rgba(42,122,75,0.25);
-  --blue: #2a5c8a;
-  --blue-bg: #e8f0f8;
+  --navy: #0d1b3e;
+  --navy2: #162244;
+  --navy3: #1e2f55;
+  --cyan: #00b4d8;
+  --cyan2: #0096c7;
+  --cyan-glow: rgba(0,180,216,0.15);
+  --orange: #f4651a;
+  --orange2: #e05510;
+  --orange-glow: rgba(244,101,26,0.15);
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #e8edf8;
+  --text2: #8fa3c8;
+  --text3: #4e6080;
+  --green: #00d68f;
+  --green-bg: rgba(0,214,143,0.1);
   --sidebar-w: 260px;
+  --font: 'Outfit', sans-serif;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--ink); font-family:'Cabinet Grotesk',sans-serif; height:100vh; display:flex; overflow:hidden; }
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--navy);color:var(--text);font-family:var(--font);display:flex;flex-direction:column;}
 
-/* SIDEBAR */
-.sidebar { width:var(--sidebar-w); background:var(--ink); display:flex; flex-direction:column; flex-shrink:0; overflow:hidden; }
-.sidebar-logo { padding:20px; border-bottom:1px solid rgba(255,255,255,0.07); }
-.logo-mark { font-family:'Instrument Serif',serif; font-size:22px; color:#fff; letter-spacing:-0.5px; }
-.logo-mark span { color:var(--accent); font-style:italic; }
-.logo-sub { font-size:10px; color:rgba(255,255,255,0.3); letter-spacing:0.12em; text-transform:uppercase; margin-top:2px; }
-.sidebar-section { padding:14px 16px 6px; font-size:10px; color:rgba(255,255,255,0.25); text-transform:uppercase; letter-spacing:0.1em; }
-.nav-item { display:flex; align-items:center; gap:10px; padding:9px 16px; cursor:pointer; font-size:13px; color:rgba(255,255,255,0.5); transition:all 0.15s; margin:1px 8px; border-radius:8px; }
-.nav-item:hover { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.85); }
-.nav-item.active { background:rgba(200,96,42,0.2); color:#fff; }
-.nav-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.2); flex-shrink:0; }
-.nav-item.active .nav-dot { background:var(--accent); }
-.client-list { flex:1; overflow-y:auto; padding:4px 0; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.1) transparent; }
-.client-item { display:flex; align-items:center; gap:10px; padding:8px 16px; margin:1px 8px; border-radius:8px; cursor:pointer; transition:all 0.15s; }
-.client-item:hover { background:rgba(255,255,255,0.07); }
-.client-item.active { background:rgba(200,96,42,0.15); }
-.client-avatar { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; color:#fff; }
-.client-info { overflow:hidden; }
-.client-name { font-size:13px; color:rgba(255,255,255,0.8); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:500; }
-.client-niche { font-size:10px; color:rgba(255,255,255,0.3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.sidebar-bottom { padding:12px; border-top:1px solid rgba(255,255,255,0.07); }
-.add-client-btn { width:100%; padding:9px; background:rgba(200,96,42,0.15); border:1px solid rgba(200,96,42,0.3); border-radius:8px; color:var(--accent); font-family:'Cabinet Grotesk',sans-serif; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s; }
-.add-client-btn:hover { background:rgba(200,96,42,0.25); }
+/* grid bg */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,180,216,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
 
-/* MAIN */
-.main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
-.topbar { display:flex; align-items:center; justify-content:space-between; padding:14px 24px; background:var(--surface); border-bottom:1px solid var(--border); flex-shrink:0; }
-.topbar-left { display:flex; align-items:center; gap:14px; }
-.topbar-client-name { font-family:'Instrument Serif',serif; font-size:18px; color:var(--ink); }
-.topbar-client-niche { font-size:11px; color:var(--ink3); background:var(--surface2); padding:3px 10px; border-radius:20px; border:1px solid var(--border); }
-.topbar-right { display:flex; align-items:center; gap:10px; }
-.settings-btn { padding:7px 14px; background:transparent; border:1px solid var(--border2); border-radius:8px; font-family:'Cabinet Grotesk',sans-serif; font-size:12px; color:var(--ink2); cursor:pointer; transition:all 0.15s; }
-.settings-btn:hover { background:var(--surface2); }
-.api-status { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--ink3); padding:5px 12px; border:1px solid var(--border); border-radius:20px; background:var(--surface2); }
-.api-dot { width:6px; height:6px; border-radius:50%; background:var(--ink3); transition:all 0.3s; }
-.api-dot.on { background:var(--green); box-shadow:0 0 5px var(--green); }
+/* ── LAYOUT ── */
+.app{display:flex;flex:1;height:100vh;position:relative;z-index:1;overflow:hidden;}
 
-/* CONTENT */
-.content { flex:1; display:flex; overflow:hidden; }
-.chat-panel { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--navy2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:transform 0.3s ease;overflow:hidden;}
+.sidebar-logo{padding:18px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.logo-img{width:36px;height:36px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+.logo-text{display:flex;flex-direction:column;}
+.logo-name{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-0.3px;line-height:1;}
+.logo-sub{font-size:9px;color:var(--cyan);letter-spacing:0.15em;text-transform:uppercase;margin-top:2px;}
 
-/* Quick actions */
-.quick-actions { display:flex; gap:8px; padding:12px 20px; background:var(--surface); border-bottom:1px solid var(--border); overflow-x:auto; scrollbar-width:none; flex-shrink:0; }
-.quick-actions::-webkit-scrollbar { display:none; }
-.qa-btn { display:flex; align-items:center; gap:6px; padding:6px 14px; background:var(--bg); border:1px solid var(--border2); border-radius:20px; font-family:'Cabinet Grotesk',sans-serif; font-size:12px; color:var(--ink2); cursor:pointer; white-space:nowrap; transition:all 0.15s; font-weight:500; }
-.qa-btn:hover { background:var(--accent-bg); border-color:var(--accent); color:var(--accent); }
+.sidebar-section{padding:14px 14px 5px;font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;font-weight:600;}
 
-/* Messages */
-#messages { flex:1; overflow-y:auto; padding:24px 20px; display:flex; flex-direction:column; gap:20px; scrollbar-width:thin; scrollbar-color:var(--border2) transparent; }
-.msg { display:flex; gap:12px; max-width:820px; animation:slideUp 0.2s ease; }
-.msg.user { flex-direction:row-reverse; align-self:flex-end; }
-.msg.assistant { align-self:flex-start; }
-@keyframes slideUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
-.msg-avatar { width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0; }
-.msg.user .msg-avatar { background:var(--ink); color:#fff; font-size:11px; }
-.msg.assistant .msg-avatar { background:var(--accent-bg); border:1px solid var(--accent-border); color:var(--accent); font-family:'Instrument Serif',serif; font-style:italic; font-size:15px; }
-.bubble { padding:13px 16px; border-radius:14px; font-size:14px; line-height:1.75; max-width:640px; word-break:break-word; }
-.msg.user .bubble { background:var(--ink); color:#fff; border-radius:14px 4px 14px 14px; white-space:pre-wrap; }
-.msg.assistant .bubble { background:var(--surface); border:1px solid var(--border); border-radius:4px 14px 14px 14px; color:var(--ink); }
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 12px;margin:1px 8px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.15s;}
+.nav-item:hover{background:var(--surface2);color:var(--text);}
+.nav-item.active{background:linear-gradient(135deg,rgba(0,180,216,0.15),rgba(0,150,199,0.08));color:var(--cyan);border:1px solid rgba(0,180,216,0.2);}
+.nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0;}
 
-/* Analysis card inside bubble */
-.analysis-card { background:var(--bg); border:1px solid var(--border2); border-radius:10px; padding:14px 16px; margin-top:10px; }
-.analysis-card-header { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
-.analysis-badge { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; padding:3px 10px; border-radius:20px; }
-.badge-scan { background:var(--blue-bg); color:var(--blue); border:1px solid rgba(42,92,138,0.2); }
-.badge-ok { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
-.badge-warn { background:#fef9e8; color:#92660a; border:1px solid rgba(146,102,10,0.2); }
-.analysis-title { font-size:13px; font-weight:600; color:var(--ink); }
-.analysis-body { font-size:13px; line-height:1.7; color:var(--ink2); white-space:pre-wrap; }
-.analysis-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:10px; }
-.metric-box { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center; }
-.metric-val { font-size:16px; font-weight:700; color:var(--ink); font-family:'Instrument Serif',serif; }
-.metric-label { font-size:10px; color:var(--ink3); margin-top:2px; text-transform:uppercase; letter-spacing:0.06em; }
+.client-list{flex:1;overflow-y:auto;padding:4px 0;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;}
+.client-item{display:flex;align-items:center;gap:9px;padding:7px 12px;margin:1px 8px;border-radius:8px;cursor:pointer;transition:all 0.15s;}
+.client-item:hover{background:var(--surface);}
+.client-item.active{background:rgba(0,180,216,0.1);border:1px solid rgba(0,180,216,0.15);}
+.client-avatar{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:#fff;}
+.client-info{overflow:hidden;min-width:0;}
+.client-name{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;}
+.client-niche{font-size:10px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.client-item.admin-item .client-name{color:var(--cyan);}
 
-/* Typing */
-.typing-bubble { background:var(--surface); border:1px solid var(--border); border-radius:4px 14px 14px 14px; padding:16px 18px; display:flex; gap:5px; align-items:center; }
-.typing-dot { width:7px; height:7px; border-radius:50%; background:var(--ink3); animation:tdot 1.3s infinite; }
-.typing-dot:nth-child(2){animation-delay:0.18s} .typing-dot:nth-child(3){animation-delay:0.36s}
-@keyframes tdot { 0%,60%,100%{transform:translateY(0);opacity:0.35} 30%{transform:translateY(-5px);opacity:1} }
+.sidebar-bottom{padding:10px;border-top:1px solid var(--border);}
+.add-btn{width:100%;padding:9px;background:linear-gradient(135deg,var(--orange),var(--orange2));border:none;border-radius:8px;color:#fff;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;transition:opacity 0.15s;letter-spacing:0.02em;}
+.add-btn:hover{opacity:0.9;}
 
-/* Scanning animation */
-.scanning-bubble { background:var(--blue-bg); border:1px solid rgba(42,92,138,0.2); border-radius:4px 14px 14px 14px; padding:14px 18px; display:flex; align-items:center; gap:12px; max-width:400px; }
-.scan-spinner { width:18px; height:18px; border:2px solid rgba(42,92,138,0.2); border-top-color:var(--blue); border-radius:50%; animation:spin 0.8s linear infinite; flex-shrink:0; }
-@keyframes spin { to{transform:rotate(360deg)} }
-.scan-text { font-size:13px; color:var(--blue); font-weight:500; }
-.scan-sub { font-size:11px; color:rgba(42,92,138,0.6); margin-top:2px; }
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
 
-/* Welcome */
-.welcome-state { align-self:center; text-align:center; max-width:440px; padding:40px 20px; }
-.welcome-serif { font-family:'Instrument Serif',serif; font-size:28px; color:var(--ink); margin-bottom:10px; line-height:1.2; }
-.welcome-serif em { color:var(--accent); font-style:italic; }
-.welcome-sub { font-size:13px; color:var(--ink2); line-height:1.7; }
-.welcome-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:20px; text-align:left; }
-.welcome-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; cursor:pointer; transition:all 0.15s; }
-.welcome-card:hover { border-color:var(--accent); background:var(--accent-bg); }
-.welcome-card-icon { font-size:18px; margin-bottom:6px; }
-.welcome-card-label { font-size:12px; font-weight:600; color:var(--ink); }
-.welcome-card-desc { font-size:11px; color:var(--ink3); margin-top:2px; }
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:var(--navy2);border-bottom:1px solid var(--border);flex-shrink:0;gap:10px;}
+.topbar-left{display:flex;align-items:center;gap:10px;min-width:0;}
+.hamburger{display:none;background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;padding:2px 6px;flex-shrink:0;}
+.topbar-name{font-size:16px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-niche{font-size:10px;color:var(--cyan);background:var(--cyan-glow);padding:3px 10px;border-radius:20px;border:1px solid rgba(0,180,216,0.2);white-space:nowrap;flex-shrink:0;}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.tbtn{padding:6px 12px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;font-family:var(--font);font-size:11px;color:var(--text2);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.tbtn:hover{background:var(--surface2);color:var(--text);}
+.api-pill{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);padding:4px 10px;border:1px solid var(--border);border-radius:20px;background:var(--surface);}
+.api-dot{width:5px;height:5px;border-radius:50%;background:var(--text3);transition:all 0.3s;}
+.api-dot.on{background:var(--green);box-shadow:0 0 5px var(--green);}
 
-/* Input */
-.input-area { padding:12px 20px 16px; background:var(--surface); border-top:1px solid var(--border); flex-shrink:0; }
-.input-wrap { display:flex; gap:8px; align-items:flex-end; background:var(--bg); border:1px solid var(--border2); border-radius:12px; padding:10px 12px; transition:border-color 0.2s; }
-.input-wrap:focus-within { border-color:var(--accent); }
-#user-input { flex:1; background:transparent; border:none; outline:none; font-family:'Cabinet Grotesk',sans-serif; font-size:14px; color:var(--ink); resize:none; max-height:120px; line-height:1.6; }
-#user-input::placeholder { color:var(--ink3); }
-#send-btn { background:var(--accent); border:none; border-radius:8px; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0; transition:all 0.15s; }
-#send-btn:hover { background:#b5521f; transform:scale(1.04); }
-#send-btn:disabled { background:var(--border2); color:var(--ink3); cursor:not-allowed; transform:none; }
+/* QUICK ACTIONS */
+.quick-bar{display:flex;gap:6px;padding:10px 18px;background:var(--navy2);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.quick-bar::-webkit-scrollbar{display:none;}
+.qbtn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:var(--surface);border:1px solid var(--border2);border-radius:20px;font-family:var(--font);font-size:11px;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all 0.15s;font-weight:500;}
+.qbtn:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-glow);}
 
-/* Client Panel */
-.client-panel { width:290px; background:var(--surface); border-left:1px solid var(--border); display:flex; flex-direction:column; overflow:hidden; flex-shrink:0; transition:width 0.2s; }
-.client-panel.collapsed { width:0; }
-.panel-header { padding:16px 18px 12px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
-.panel-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink2); }
-.panel-close { background:none; border:none; font-size:16px; color:var(--ink3); cursor:pointer; }
-.panel-body { flex:1; overflow-y:auto; padding:14px 18px; scrollbar-width:thin; scrollbar-color:var(--border2) transparent; }
-.field-group { margin-bottom:14px; }
-.field-label { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink3); font-weight:600; margin-bottom:5px; }
-.field-input { width:100%; background:var(--bg); border:1px solid var(--border2); border-radius:8px; padding:8px 10px; font-family:'Cabinet Grotesk',sans-serif; font-size:13px; color:var(--ink); outline:none; transition:border-color 0.15s; resize:none; }
-.field-input:focus { border-color:var(--accent); }
-.field-input::placeholder { color:var(--ink3); }
-textarea.field-input { min-height:70px; line-height:1.5; }
+/* MESSAGES */
+#messages{flex:1;overflow-y:auto;padding:20px 18px;display:flex;flex-direction:column;gap:16px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;}
+.msg{display:flex;gap:10px;max-width:800px;animation:fadeUp 0.2s ease;}
+.msg.user{flex-direction:row-reverse;align-self:flex-end;}
+.msg.assistant{align-self:flex-start;width:100%;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.avatar{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.msg.user .avatar{background:var(--navy3);border:1px solid var(--border2);color:var(--cyan);font-size:10px;}
+.msg.assistant .avatar{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#fff;font-size:13px;font-weight:800;}
+.bubble{padding:12px 15px;border-radius:12px;font-size:13.5px;line-height:1.7;max-width:660px;word-break:break-word;}
+.msg.user .bubble{background:var(--navy3);border:1px solid var(--border2);border-radius:12px 3px 12px 12px;white-space:pre-wrap;color:var(--text);}
+.msg.assistant .bubble{background:var(--surface);border:1px solid var(--border);border-radius:3px 12px 12px 12px;color:var(--text);width:100%;}
+.typing-bubble{background:var(--surface);border:1px solid var(--border);border-radius:3px 12px 12px 12px;padding:14px 16px;display:flex;gap:5px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:td 1.3s infinite;}
+.tdot:nth-child(2){animation-delay:0.18s}.tdot:nth-child(3){animation-delay:0.36s}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:0.3}30%{transform:translateY(-5px);opacity:1}}
 
-/* Social field with analyse button */
-.social-row { display:flex; gap:6px; align-items:flex-start; }
-.social-row .field-input { flex:1; }
-.analyse-btn { padding:8px 10px; background:var(--blue-bg); border:1px solid rgba(42,92,138,0.3); border-radius:8px; color:var(--blue); font-family:'Cabinet Grotesk',sans-serif; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; transition:all 0.15s; flex-shrink:0; }
-.analyse-btn:hover { background:rgba(42,92,138,0.15); }
-.analyse-btn:disabled { opacity:0.5; cursor:not-allowed; }
+/* CONTENT CARDS */
+.post-card{background:var(--navy3);border:1px solid var(--border2);border-radius:12px;padding:14px 15px;margin-top:8px;}
+.card-badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:3px 9px;border-radius:20px;margin-bottom:10px;display:inline-flex;align-items:center;gap:4px;}
+.badge-post{background:var(--orange-glow);color:var(--orange);border:1px solid rgba(244,101,26,0.25);}
+.badge-reel{background:rgba(139,92,246,0.15);color:#a78bfa;border:1px solid rgba(139,92,246,0.25);}
+.post-text{font-size:13px;line-height:1.75;color:var(--text);white-space:pre-wrap;word-break:break-word;}
+.visual-hint{margin-top:10px;padding:10px 12px;background:rgba(0,180,216,0.06);border:1px dashed rgba(0,180,216,0.2);border-radius:8px;}
+.visual-hint-label{font-size:9px;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+.visual-hint-text{font-size:12px;color:var(--text2);line-height:1.5;font-style:italic;}
+.card-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;}
+.gen-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:linear-gradient(135deg,var(--orange),var(--orange2));border:none;border-radius:20px;color:#fff;font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;transition:opacity 0.15s;}
+.gen-btn:hover{opacity:0.85;}
+.gen-btn:disabled{background:var(--surface2);color:var(--text3);cursor:not-allowed;}
+.copy-btn2{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:var(--surface);border:1px solid var(--border2);border-radius:20px;color:var(--text2);font-family:var(--font);font-size:11px;cursor:pointer;transition:all 0.15s;}
+.copy-btn2:hover{border-color:var(--cyan);color:var(--cyan);}
+.img-result{margin-top:10px;border-radius:10px;overflow:hidden;position:relative;}
+.img-result img{width:100%;display:block;border-radius:10px;}
+.img-loading{height:180px;display:flex;align-items:center;justify-content:center;background:var(--navy2);border-radius:10px;flex-direction:column;gap:8px;font-size:12px;color:var(--text3);}
+.img-dl{position:absolute;top:8px;right:8px;background:rgba(13,27,62,0.8);border:1px solid var(--border2);border-radius:8px;color:var(--text);padding:5px 10px;font-size:11px;cursor:pointer;font-family:var(--font);}
 
-/* Diagnosis banner */
-.diagnosis-banner { margin:0 18px 14px; background:var(--green-bg); border:1px solid var(--green-border); border-radius:10px; padding:10px 12px; }
-.diagnosis-banner.warn { background:#fef9e8; border-color:rgba(146,102,10,0.2); }
-.diagnosis-banner.error { background:#fef2f2; border-color:rgba(220,38,38,0.2); }
-.diagnosis-banner-title { font-size:11px; font-weight:700; color:var(--green); margin-bottom:4px; display:flex; align-items:center; gap:5px; }
-.diagnosis-banner.warn .diagnosis-banner-title { color:#92660a; }
-.diagnosis-banner-text { font-size:12px; color:var(--ink2); line-height:1.5; }
+/* REEL CARD */
+.reel-card{background:var(--navy3);border:1px solid var(--border2);border-radius:12px;padding:14px 15px;margin-top:8px;}
+.reel-hook{padding:8px 12px;background:rgba(244,101,26,0.08);border:1px solid rgba(244,101,26,0.2);border-radius:8px;font-size:12px;color:var(--orange);margin-bottom:10px;}
+.scenes{display:flex;flex-direction:column;gap:8px;}
+.scene{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;}
+.scene-n{width:22px;height:22px;border-radius:50%;background:var(--cyan);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;}
+.scene-body{flex:1;min-width:0;}
+.scene-dur{font-size:9px;color:var(--text3);margin-bottom:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;}
+.scene-desc{font-size:12px;color:var(--text);line-height:1.5;}
+.scene-vis{font-size:11px;color:var(--text3);font-style:italic;margin-top:3px;}
+.scene-img{width:70px;flex-shrink:0;}
+.scene-img img{width:70px;height:70px;object-fit:cover;border-radius:7px;border:1px solid var(--border);}
+.scene-ph{width:70px;height:70px;border-radius:7px;background:var(--surface);border:1px dashed var(--border2);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all 0.15s;}
+.scene-ph:hover{border-color:var(--cyan);background:var(--cyan-glow);}
+.reel-footer{margin-top:10px;font-size:11px;color:var(--text3);}
 
-.panel-actions { padding:12px 18px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px; }
-.save-btn { width:100%; padding:9px; background:var(--accent); border:none; border-radius:8px; color:#fff; font-family:'Cabinet Grotesk',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.15s; }
-.save-btn:hover { background:#b5521f; }
-.clear-btn { width:100%; padding:8px; background:transparent; border:1px solid var(--border2); border-radius:8px; color:var(--ink2); font-family:'Cabinet Grotesk',sans-serif; font-size:12px; cursor:pointer; transition:all 0.15s; }
-.clear-btn:hover { background:var(--bg); }
+/* SCANNING */
+.scan-bubble{background:rgba(0,180,216,0.06);border:1px solid rgba(0,180,216,0.2);border-radius:3px 12px 12px 12px;padding:12px 16px;display:flex;align-items:center;gap:12px;max-width:340px;}
+.spin{width:16px;height:16px;border:2px solid rgba(0,180,216,0.2);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scan-text{font-size:12px;color:var(--cyan);font-weight:500;}
+.scan-sub{font-size:10px;color:var(--text3);margin-top:2px;}
 
-/* Modals */
-.modal-overlay { position:fixed; inset:0; background:rgba(26,23,20,0.6); display:flex; align-items:center; justify-content:center; z-index:100; backdrop-filter:blur(4px); opacity:0; pointer-events:none; transition:opacity 0.2s; }
-.modal-overlay.open { opacity:1; pointer-events:all; }
-.modal { background:var(--surface); border-radius:16px; width:480px; max-width:95vw; border:1px solid var(--border2); overflow:hidden; transform:translateY(10px); transition:transform 0.2s; }
-.modal-overlay.open .modal { transform:translateY(0); }
-.modal-header { padding:20px 24px 16px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
-.modal-title { font-family:'Instrument Serif',serif; font-size:20px; }
-.modal-close { background:none; border:none; font-size:20px; color:var(--ink3); cursor:pointer; }
-.modal-body { padding:20px 24px; display:flex; flex-direction:column; gap:14px; }
-.modal-footer { padding:14px 24px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; gap:8px; }
-.btn-primary { padding:9px 20px; background:var(--accent); border:none; border-radius:8px; color:#fff; font-family:'Cabinet Grotesk',sans-serif; font-size:13px; font-weight:700; cursor:pointer; }
-.btn-secondary { padding:9px 20px; background:transparent; border:1px solid var(--border2); border-radius:8px; color:var(--ink2); font-family:'Cabinet Grotesk',sans-serif; font-size:13px; cursor:pointer; }
-.settings-field { display:flex; flex-direction:column; gap:6px; }
-.settings-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink2); }
-.settings-input { background:var(--bg); border:1px solid var(--border2); border-radius:8px; padding:9px 12px; font-family:'Cabinet Grotesk',sans-serif; font-size:13px; color:var(--ink); outline:none; transition:border-color 0.15s; }
-.settings-input:focus { border-color:var(--accent); }
-.hint { font-size:11px; color:var(--ink3); }
+/* DIAGNOSIS BANNER */
+.diag-banner{margin:0 14px 10px;padding:10px 13px;border-radius:10px;border:1px solid;}
+.diag-ok{background:rgba(0,214,143,0.07);border-color:rgba(0,214,143,0.2);}
+.diag-warn{background:rgba(244,101,26,0.07);border-color:rgba(244,101,26,0.2);}
+.diag-title{font-size:11px;font-weight:700;margin-bottom:3px;}
+.diag-ok .diag-title{color:var(--green);}
+.diag-warn .diag-title{color:var(--orange);}
+.diag-text{font-size:11px;color:var(--text2);line-height:1.5;}
 
-/* Toast */
-.toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); padding:10px 18px; border-radius:10px; font-size:13px; z-index:200; opacity:0; transition:opacity 0.2s; pointer-events:none; border:1px solid; }
-.toast.show { opacity:1; }
-.toast.error { background:#fef2f2; border-color:#fca5a5; color:#991b1b; }
-.toast.success { background:#f0fdf4; border-color:#86efac; color:#166534; }
-.toast.info { background:var(--blue-bg); border-color:rgba(42,92,138,0.3); color:var(--blue); }
+/* WELCOME */
+.welcome-state{align-self:center;text-align:center;max-width:400px;padding:40px 20px;}
+.welcome-logo{width:60px;height:60px;border-radius:16px;object-fit:cover;margin:0 auto 16px;}
+.welcome-title{font-size:24px;font-weight:800;color:var(--text);margin-bottom:8px;letter-spacing:-0.5px;}
+.welcome-title span{color:var(--cyan);}
+.welcome-sub{font-size:13px;color:var(--text2);line-height:1.7;}
+.welcome-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px;text-align:left;}
+.wcard{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:12px 13px;cursor:pointer;transition:all 0.15s;}
+.wcard:hover{border-color:var(--cyan);background:var(--cyan-glow);}
+.wcard-icon{font-size:18px;margin-bottom:5px;}
+.wcard-title{font-size:12px;font-weight:600;color:var(--text);}
+.wcard-desc{font-size:11px;color:var(--text3);margin-top:2px;}
 
-/* Content cards — legenda + imagem */
-.content-card { background:var(--bg); border:1px solid var(--border2); border-radius:12px; padding:14px 16px; margin-top:10px; }
-.content-card-meta { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-.content-type-badge { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; padding:3px 10px; border-radius:20px; }
-.badge-post { background:var(--accent-bg); color:var(--accent); border:1px solid var(--accent-border); }
-.badge-reel { background:#f3e8ff; color:#7c3aed; border:1px solid rgba(124,58,237,0.2); }
-.badge-story { background:var(--blue-bg); color:var(--blue); border:1px solid rgba(42,92,138,0.2); }
-.content-card-body { font-size:13.5px; line-height:1.75; color:var(--ink); white-space:pre-wrap; word-break:break-word; }
-.visual-suggestion { margin-top:12px; background:var(--surface); border:1px dashed var(--border2); border-radius:10px; padding:12px 14px; }
-.visual-suggestion-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink3); margin-bottom:6px; }
-.visual-suggestion-text { font-size:13px; color:var(--ink2); line-height:1.6; font-style:italic; }
-.visual-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
-.gen-img-btn { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; background:var(--accent); border:none; border-radius:20px; color:#fff; font-family:'Cabinet Grotesk',sans-serif; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s; }
-.gen-img-btn:hover { background:#b5521f; }
-.gen-img-btn:disabled { background:var(--border2); color:var(--ink3); cursor:not-allowed; }
-.copy-btn { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; background:transparent; border:1px solid var(--border2); border-radius:20px; color:var(--ink2); font-family:'Cabinet Grotesk',sans-serif; font-size:12px; cursor:pointer; transition:all 0.15s; }
-.copy-btn:hover { background:var(--surface2); }
+/* INPUT */
+.input-area{padding:10px 18px 14px;background:var(--navy2);border-top:1px solid var(--border);flex-shrink:0;}
+.input-wrap{display:flex;gap:8px;align-items:flex-end;background:var(--navy3);border:1px solid var(--border2);border-radius:12px;padding:9px 11px;transition:border-color 0.2s;}
+.input-wrap:focus-within{border-color:var(--cyan);}
+#user-input{flex:1;background:transparent;border:none;outline:none;font-family:var(--font);font-size:13.5px;color:var(--text);resize:none;max-height:110px;line-height:1.6;}
+#user-input::placeholder{color:var(--text3);}
+#send-btn{background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:9px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;transition:all 0.15s;}
+#send-btn:hover{transform:scale(1.05);}
+#send-btn:disabled{background:var(--surface2);color:var(--text3);cursor:not-allowed;transform:none;}
 
-/* Generated image */
-.gen-image-wrap { margin-top:10px; border-radius:10px; overflow:hidden; border:1px solid var(--border); position:relative; }
-.gen-image-wrap img { width:100%; display:block; border-radius:10px; }
-.gen-image-wrap .img-loading { height:200px; display:flex; align-items:center; justify-content:center; background:var(--surface2); font-size:13px; color:var(--ink3); flex-direction:column; gap:8px; }
-.img-dl-btn { position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.6); border:none; border-radius:8px; color:#fff; padding:6px 10px; font-size:11px; cursor:pointer; font-family:'Cabinet Grotesk',sans-serif; }
+/* CLIENT PANEL */
+.client-panel{width:270px;background:var(--navy2);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;transition:width 0.25s;}
+.client-panel.collapsed{width:0;}
+.panel-head{padding:14px 16px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.panel-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text2);}
+.panel-close{background:none;border:none;font-size:17px;color:var(--text3);cursor:pointer;}
+.panel-body{flex:1;overflow-y:auto;padding:12px 16px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;}
+.fl{margin-bottom:12px;}
+.fl-label{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);font-weight:700;margin-bottom:4px;}
+.fl-input{width:100%;background:var(--navy3);border:1px solid var(--border2);border-radius:7px;padding:7px 10px;font-family:var(--font);font-size:12px;color:var(--text);outline:none;transition:border-color 0.15s;resize:none;}
+.fl-input:focus{border-color:var(--cyan);}
+.fl-input::placeholder{color:var(--text3);}
+textarea.fl-input{min-height:62px;line-height:1.5;}
+.analyse-btn{width:100%;margin-top:6px;padding:8px;background:rgba(0,180,216,0.1);border:1px solid rgba(0,180,216,0.2);border-radius:7px;color:var(--cyan);font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.15s;}
+.analyse-btn:hover{background:rgba(0,180,216,0.2);}
+.analyse-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.panel-actions{padding:10px 16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px;}
+.save-btn{width:100%;padding:9px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:8px;color:var(--navy);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;}
+.clear-btn2{width:100%;padding:7px;background:transparent;border:1px solid var(--border2);border-radius:8px;color:var(--text3);font-family:var(--font);font-size:11px;cursor:pointer;transition:all 0.15s;}
+.clear-btn2:hover{background:var(--surface);color:var(--text2);}
 
-/* Reel storyboard */
-.reel-card { background:var(--bg); border:1px solid var(--border2); border-radius:12px; padding:14px 16px; margin-top:10px; }
-.reel-card-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-.reel-title { font-size:14px; font-weight:700; color:var(--ink); }
-.scenes-grid { display:flex; flex-direction:column; gap:10px; }
-.scene-row { display:flex; gap:10px; align-items:flex-start; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 12px; }
-.scene-num { width:24px; height:24px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; }
-.scene-body { flex:1; }
-.scene-duration { font-size:10px; color:var(--ink3); margin-bottom:3px; }
-.scene-desc { font-size:13px; color:var(--ink); line-height:1.5; }
-.scene-visual { font-size:12px; color:var(--ink3); font-style:italic; margin-top:4px; }
-.scene-img-wrap { width:80px; flex-shrink:0; }
-.scene-img-wrap img { width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid var(--border); }
-.scene-img-placeholder { width:80px; height:80px; border-radius:8px; background:var(--surface2); border:1px dashed var(--border2); display:flex; align-items:center; justify-content:center; font-size:20px; cursor:pointer; transition:all 0.15s; }
-.scene-img-placeholder:hover { border-color:var(--accent); background:var(--accent-bg); }
-.reel-actions { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(13,27,62,0.85);display:flex;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity 0.2s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--navy2);border:1px solid var(--border2);border-radius:16px;width:460px;max-width:95vw;max-height:90vh;overflow:auto;transform:translateY(10px);transition:transform 0.2s;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-head{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-title{font-size:17px;font-weight:700;color:var(--text);}
+.modal-close{background:none;border:none;font-size:20px;color:var(--text3);cursor:pointer;}
+.modal-body{padding:18px 22px;display:flex;flex-direction:column;gap:13px;}
+.modal-foot{padding:13px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;}
+.btn-p{padding:8px 20px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:8px;color:var(--navy);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;}
+.btn-s{padding:8px 20px;background:transparent;border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer;}
+.sf{display:flex;flex-direction:column;gap:5px;}
+.sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);}
+.si{background:var(--navy3);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:border-color 0.15s;}
+.si:focus{border-color:var(--cyan);}
+.hint{font-size:10px;color:var(--text3);}
 
-.chip-0{background:#c8602a} .chip-1{background:#2a7a4b} .chip-2{background:#2a5c8a} .chip-3{background:#7a2a6b} .chip-4{background:#6b5a2a} .chip-5{background:#2a6b6b}
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:10px 18px;border-radius:10px;font-size:13px;z-index:200;opacity:0;transition:opacity 0.2s;pointer-events:none;border:1px solid;white-space:nowrap;}
+.toast.show{opacity:1;}
+.toast.error{background:#1a0a0a;border-color:rgba(220,38,38,0.4);color:#fca5a5;}
+.toast.success{background:rgba(0,214,143,0.1);border-color:rgba(0,214,143,0.3);color:var(--green);}
+.toast.info{background:var(--cyan-glow);border-color:rgba(0,180,216,0.3);color:var(--cyan);}
+
+/* MOBILE OVERLAY */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(13,27,62,0.7);z-index:49;backdrop-filter:blur(2px);}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  :root{--sidebar-w:260px;}
+  .sidebar{position:fixed;left:0;top:0;height:100%;z-index:50;transform:translateX(-100%);}
+  .sidebar.mobile-open{transform:translateX(0);}
+  .sidebar-overlay.active{display:block;}
+  .hamburger{display:flex;}
+  .client-panel{display:none;}
+  .tbtn.hide-mobile{display:none;}
+  .topbar{padding:10px 14px;}
+  .quick-bar{padding:8px 14px;}
+  #messages{padding:16px 14px;}
+  .input-area{padding:8px 14px 12px;}
+  .topbar-name{font-size:14px;}
+  .msg.assistant{width:100%;}
+  .bubble{max-width:100%;}
+}
+@media(max-width:400px){
+  .welcome-cards{grid-template-columns:1fr;}
+}
+
+/* avatar colors */
+.c0{background:#0096c7}.c1{background:#2a7a4b}.c2{background:#f4651a}.c3{background:#7c3aed}.c4{background:#0d6e8a}.c5{background:#b45309}
 </style>
 </head>
 <body>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
-<div class="sidebar">
+<div class="app">
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-mark">Zala <span>AI</span></div>
-    <div class="logo-sub">Agency Operating System</div>
+    <img class="logo-img" src="https://i.ibb.co/placeholder/logo.png" id="logo-img" alt="Zala Digital" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'" />
+    <div id="logo-fallback" style="display:flex;width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--navy);flex-shrink:0;">Z</div>
+    <div class="logo-text">
+      <div class="logo-name">Zala Digital</div>
+      <div class="logo-sub">Agency OS</div>
+    </div>
   </div>
+
   <div class="sidebar-section">Menu</div>
-  <div class="nav-item active"><div class="nav-dot"></div>Chat com IA</div>
-  <div class="sidebar-section" style="margin-top:8px">Clientes</div>
+  <div class="nav-item active"><span class="nav-icon">💬</span>Chat com IA</div>
+
+  <div class="sidebar-section" style="margin-top:6px">Clientes</div>
   <div class="client-list" id="client-list"></div>
+
   <div class="sidebar-bottom">
-    <button class="add-client-btn" onclick="openNewClientModal()">+ Novo Cliente</button>
+    <button class="add-btn" onclick="openNewClientModal()">+ Novo Cliente</button>
   </div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="topbar-client-name" id="topbar-name">Seleciona um cliente</div>
-      <div class="topbar-client-niche" id="topbar-niche" style="display:none"></div>
+      <button class="hamburger" onclick="openSidebar()">☰</button>
+      <div class="topbar-name" id="topbar-name">Seleciona um cliente</div>
+      <div class="topbar-niche" id="topbar-niche" style="display:none"></div>
     </div>
     <div class="topbar-right">
-      <div class="api-status">
-        <div class="api-dot" id="api-dot"></div>
-        <span id="api-label">Sem API key</span>
-      </div>
-      <button class="settings-btn" onclick="openSettings()">⚙ Configurações</button>
-      <button class="settings-btn" onclick="togglePanel()">≡ Perfil</button>
+      <div class="api-pill"><div class="api-dot" id="api-dot"></div><span id="api-label">Sem API</span></div>
+      <button class="tbtn" onclick="openSettings()">⚙ Config</button>
+      <button class="tbtn hide-mobile" onclick="togglePanel()">≡ Perfil</button>
     </div>
   </div>
 
-  <div class="content">
-    <div class="chat-panel">
-      <div class="quick-actions" id="quick-actions" style="display:none">
-        <button class="qa-btn" onclick="quickAction('estrategia')">🎯 Estratégia de Marketing</button>
-        <button class="qa-btn" onclick="quickAction('conteudo')">📅 Plano de Conteúdo</button>
-        <button class="qa-btn" onclick="quickAction('legendas')">✍️ Gerar Legendas</button>
-        <button class="qa-btn" onclick="quickAction('vendas')">💰 Estratégia de Vendas</button>
-        <button class="qa-btn" onclick="quickAction('email')">📧 Campanha de Email</button>
-        <button class="qa-btn" onclick="quickAction('reels')">🎬 Ideias de Reels</button>
-        <button class="qa-btn" onclick="quickAction('analise')">📊 Análise do Mercado</button>
+  <div style="display:flex;flex:1;overflow:hidden;">
+    <div class="chat-panel" style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;">
+
+      <div class="quick-bar" id="quick-bar" style="display:none">
+        <button class="qbtn" onclick="qa('estrategia')">🎯 Estratégia</button>
+        <button class="qbtn" onclick="qa('conteudo')">📅 Plano Conteúdo</button>
+        <button class="qbtn" onclick="qa('legendas')">✍️ Legendas</button>
+        <button class="qbtn" onclick="qa('reels')">🎬 Reels</button>
+        <button class="qbtn" onclick="qa('vendas')">💰 Vendas</button>
+        <button class="qbtn" onclick="qa('email')">📧 Email</button>
+        <button class="qbtn" onclick="qa('analise')">📊 Análise</button>
       </div>
 
       <div id="messages">
         <div class="welcome-state" id="welcome">
-          <div class="welcome-serif">A tua agência.<br><em>Automatizada.</em></div>
-          <p class="welcome-sub">Seleciona um cliente ou cria um novo. Ao adicionar as redes sociais, a IA analisa automaticamente as páginas e gera um diagnóstico completo antes de trabalhar.</p>
-          <div class="welcome-grid">
-            <div class="welcome-card" onclick="openNewClientModal()">
-              <div class="welcome-card-icon">➕</div>
-              <div class="welcome-card-label">Novo Cliente</div>
-              <div class="welcome-card-desc">Criar perfil completo</div>
-            </div>
-            <div class="welcome-card" onclick="openSettings()">
-              <div class="welcome-card-icon">🔑</div>
-              <div class="welcome-card-label">Configurar API</div>
-              <div class="welcome-card-desc">Inserir chave do Groq</div>
-            </div>
+          <div id="logo-fallback-w" style="width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:var(--navy);margin:0 auto 16px;">Z</div>
+          <div class="welcome-title">Zala <span>Digital</span></div>
+          <p class="welcome-sub">Sistema de agência automatizada. Seleciona um cliente ou cria um novo para começar a gerar estratégias e conteúdo com IA.</p>
+          <div class="welcome-cards">
+            <div class="wcard" onclick="openNewClientModal()"><div class="wcard-icon">➕</div><div class="wcard-title">Novo Cliente</div><div class="wcard-desc">Criar perfil</div></div>
+            <div class="wcard" onclick="openSettings()"><div class="wcard-icon">🔑</div><div class="wcard-title">API Key</div><div class="wcard-desc">Configurar Groq</div></div>
           </div>
         </div>
       </div>
 
       <div class="input-area">
         <div class="input-wrap">
-          <textarea id="user-input" rows="1" placeholder="Pede uma estratégia, conteúdo, legendas..."></textarea>
+          <textarea id="user-input" rows="1" placeholder="Pede uma estratégia, legendas, reels..."></textarea>
           <button id="send-btn" onclick="sendMessage()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </div>
       </div>
     </div>
 
+    <!-- CLIENT PANEL -->
     <div class="client-panel" id="client-panel">
-      <div class="panel-header">
+      <div class="panel-head">
         <div class="panel-title">Perfil do Cliente</div>
         <button class="panel-close" onclick="togglePanel()">×</button>
       </div>
-      <div id="diagnosis-area"></div>
+      <div id="diag-area"></div>
       <div class="panel-body">
-        <div class="field-group">
-          <div class="field-label">Nome do Cliente</div>
-          <input class="field-input" id="p-name" placeholder="Ex: Loja da Maria" />
-        </div>
-        <div class="field-group">
-          <div class="field-label">Nicho / Setor</div>
-          <input class="field-input" id="p-niche" placeholder="Ex: Moda feminina, Academia..." />
-        </div>
-        <div class="field-group">
-          <div class="field-label">Objetivo Principal</div>
-          <input class="field-input" id="p-goal" placeholder="Ex: Aumentar vendas online 30%" />
-        </div>
-        <div class="field-group">
-          <div class="field-label">Público-alvo</div>
-          <textarea class="field-input" id="p-audience" placeholder="Ex: Mulheres 25-40 anos, classe média..."></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Produtos / Serviços</div>
-          <textarea class="field-input" id="p-products" placeholder="Ex: Roupas femininas, ticket médio R$150..."></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Tom de Comunicação</div>
-          <input class="field-input" id="p-tone" placeholder="Ex: Descontraído, sofisticado..." />
-        </div>
-        <div class="field-group">
-          <div class="field-label">Estratégia Atual</div>
-          <textarea class="field-input" id="p-strategy" placeholder="Ex: Posts 3x/semana, sem anúncios..."></textarea>
-        </div>
-        <div class="field-group">
-          <div class="field-label">Redes Sociais <span style="color:var(--blue);font-size:9px;font-weight:700;margin-left:4px">→ ANÁLISE AUTO</span></div>
-          <div class="social-row">
-            <textarea class="field-input" id="p-social" rows="3" placeholder="Instagram: @handle&#10;Facebook: facebook.com/pagina&#10;TikTok: @handle"></textarea>
-          </div>
-          <button class="analyse-btn" id="analyse-btn" onclick="analyseSocials()" style="margin-top:6px;width:100%">🔍 Analisar Páginas Agora</button>
+        <div class="fl"><div class="fl-label">Nome</div><input class="fl-input" id="p-name" placeholder="Nome do cliente" /></div>
+        <div class="fl"><div class="fl-label">Nicho</div><input class="fl-input" id="p-niche" placeholder="Ex: Restaurante, Barbearia..." /></div>
+        <div class="fl"><div class="fl-label">Objetivo</div><input class="fl-input" id="p-goal" placeholder="Ex: Mais clientes, mais vendas..." /></div>
+        <div class="fl"><div class="fl-label">Público-alvo</div><textarea class="fl-input" id="p-audience" placeholder="Quem são os clientes deles?"></textarea></div>
+        <div class="fl"><div class="fl-label">Produtos / Serviços</div><textarea class="fl-input" id="p-products" placeholder="O que vendem? Preços?"></textarea></div>
+        <div class="fl"><div class="fl-label">Tom de Comunicação</div><input class="fl-input" id="p-tone" placeholder="Ex: Descontraído, formal..." /></div>
+        <div class="fl"><div class="fl-label">Estratégia Atual</div><textarea class="fl-input" id="p-strategy" placeholder="O que já fazem nas redes?"></textarea></div>
+        <div class="fl">
+          <div class="fl-label">Redes Sociais <span style="color:var(--cyan);font-size:8px;margin-left:4px">→ ANÁLISE AUTO</span></div>
+          <textarea class="fl-input" id="p-social" rows="3" placeholder="Instagram: @handle&#10;Facebook: facebook.com/pagina"></textarea>
+          <button class="analyse-btn" id="analyse-btn" onclick="analyseSocials()">🔍 Analisar Páginas</button>
         </div>
       </div>
       <div class="panel-actions">
-        <button class="save-btn" onclick="saveCurrentClient()">Guardar Perfil</button>
-        <button class="clear-btn" onclick="clearChat()">Limpar conversa</button>
+        <button class="save-btn" onclick="saveClient()">Guardar Perfil</button>
+        <button class="clear-btn2" onclick="clearChat()">Limpar conversa</button>
       </div>
     </div>
   </div>
 </div>
+</div>
 
 <!-- NEW CLIENT MODAL -->
-<div class="modal-overlay" id="new-client-modal">
+<div class="modal-overlay" id="modal-new">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Novo Cliente</div>
-      <button class="modal-close" onclick="closeModal('new-client-modal')">×</button>
-    </div>
+    <div class="modal-head"><div class="modal-title">Novo Cliente</div><button class="modal-close" onclick="closeModal('modal-new')">×</button></div>
     <div class="modal-body">
-      <div class="field-group"><div class="field-label">Nome *</div><input class="field-input" id="nc-name" placeholder="Ex: Loja da Maria" /></div>
-      <div class="field-group"><div class="field-label">Nicho *</div><input class="field-input" id="nc-niche" placeholder="Ex: Moda feminina, Restaurante..." /></div>
-      <div class="field-group"><div class="field-label">Objetivo</div><input class="field-input" id="nc-goal" placeholder="Ex: Aumentar vendas online" /></div>
+      <div class="sf"><div class="sl">Nome *</div><input class="si" id="nc-name" placeholder="Nome do cliente ou empresa" /></div>
+      <div class="sf"><div class="sl">Nicho *</div><input class="si" id="nc-niche" placeholder="Ex: Restaurante, Clínica, Barbearia..." /></div>
+      <div class="sf"><div class="sl">Objetivo</div><input class="si" id="nc-goal" placeholder="Ex: Crescer no Instagram" /></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeModal('new-client-modal')">Cancelar</button>
-      <button class="btn-primary" onclick="createClient()">Criar Cliente</button>
-    </div>
+    <div class="modal-foot"><button class="btn-s" onclick="closeModal('modal-new')">Cancelar</button><button class="btn-p" onclick="createClient()">Criar</button></div>
   </div>
 </div>
 
 <!-- SETTINGS MODAL -->
-<div class="modal-overlay" id="settings-modal">
+<div class="modal-overlay" id="modal-settings">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Configurações</div>
-      <button class="modal-close" onclick="closeModal('settings-modal')">×</button>
-    </div>
+    <div class="modal-head"><div class="modal-title">Configurações</div><button class="modal-close" onclick="closeModal('modal-settings')">×</button></div>
     <div class="modal-body">
-      <div class="settings-field">
-        <div class="settings-label">API Key — Groq (Gratuito)</div>
-        <input type="password" class="settings-input" id="s-apikey" placeholder="gsk_..." />
-        <div class="hint">100% gratuito em console.groq.com — sem cartão de crédito</div>
+      <div class="sf">
+        <div class="sl">API Key — Groq (Gratuito)</div>
+        <input type="password" class="si" id="s-key" placeholder="gsk_..." />
+        <div class="hint">100% gratuito · console.groq.com · sem cartão de crédito</div>
       </div>
-      <div class="settings-field">
-        <div class="settings-label">Modelo</div>
-        <select class="settings-input" id="s-model">
+      <div class="sf">
+        <div class="sl">Modelo</div>
+        <select class="si" id="s-model">
           <option value="llama-3.3-70b-versatile">Llama 3.3 70B (recomendado)</option>
           <option value="llama-3.1-8b-instant">Llama 3.1 8B (mais rápido)</option>
           <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
           <option value="gemma2-9b-it">Gemma 2 9B</option>
         </select>
       </div>
-      <div class="settings-field">
-        <div class="settings-label">Webhook (Make / n8n)</div>
-        <input class="settings-input" id="s-webhook" placeholder="https://hook.eu2.make.com/..." />
+      <div class="sf">
+        <div class="sl">Webhook (Make / n8n)</div>
+        <input class="si" id="s-webhook" placeholder="https://hook.eu2.make.com/..." />
         <div class="hint">Cada resposta é enviada para este URL automaticamente</div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeModal('settings-modal')">Cancelar</button>
-      <button class="btn-primary" onclick="saveSettings()">Guardar</button>
-    </div>
+    <div class="modal-foot"><button class="btn-s" onclick="closeModal('modal-settings')">Cancelar</button><button class="btn-p" onclick="saveSettings()">Guardar</button></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-let state = { apiKey:'', model:'claude-sonnet-4-20250514', webhook:'', clients:[], activeClientId:null, histories:{}, diagnoses:{}, isLoading:false };
+// ── ZALA DIGITAL ADMIN ACCOUNT (pre-configured) ──
+const ZALA_ADMIN = {
+  id: 'zala_digital_admin',
+  isAdmin: true,
+  name: 'Zala Digital',
+  niche: 'Agência de Marketing Digital & Gestão de Redes Sociais',
+  goal: 'Conseguir clientes para gestão de redes sociais e serviços de marketing digital em Angola',
+  audience: 'Pequenos e médios negócios em Angola (Luanda): lojas, restaurantes, barbearias, clínicas, prestadores de serviços',
+  products: 'Gestão de redes sociais, criação de conteúdo, marketing digital, anúncios pagos, crescimento online. Pacotes mensais: Básico / Intermédio / Premium',
+  tone: 'Profissional, confiante, moderno e próximo. Focado em resultados tangíveis',
+  strategy: 'Uso de IA para acelerar criação de conteúdo — mais rápido e acessível que agências tradicionais',
+  social: 'Instagram: @zaladigital\nFacebook: facebook.com/zaladigital'
+};
+
+let S = {
+  apiKey:'', model:'llama-3.3-70b-versatile', webhook:'',
+  clients:[], activeClientId:null, histories:{}, diagnoses:{}, isLoading:false
+};
 
 function init() {
-  try { const s = localStorage.getItem('zala-v3'); if(s) state = {...state,...JSON.parse(s)}; } catch(e){}
-  if(!state.clients.length) {
-    state.clients.push({id:'demo',name:'Loja Exemplo',niche:'Moda feminina',goal:'Aumentar vendas 30%',audience:'Mulheres 25-40, classe média',products:'Roupas, acessórios. Ticket médio R$150',tone:'Descontraído e sofisticado',strategy:'Instagram 3x/semana, sem anúncios',social:'Instagram: @lojaexemplo\nFacebook: facebook.com/lojaexemplo'});
-    save();
-  }
-  renderClients();
-  updateApiStatus();
-  if(state.activeClientId) loadClient(state.activeClientId);
+  try { const d = localStorage.getItem('zala-v4'); if(d) S={...S,...JSON.parse(d)}; } catch(e){}
+  // Ensure admin account always exists and is up to date
+  const adminIdx = S.clients.findIndex(c=>c.id==='zala_digital_admin');
+  if(adminIdx===-1) S.clients.unshift(ZALA_ADMIN);
+  else S.clients[adminIdx] = {...S.clients[adminIdx], ...ZALA_ADMIN};
+  save(); renderClients(); updateApi();
+  if(S.activeClientId) loadClient(S.activeClientId);
 }
 
-function save() { localStorage.setItem('zala-v3', JSON.stringify(state)); }
+function save(){ localStorage.setItem('zala-v4', JSON.stringify(S)); }
 
-function renderClients() {
-  const list = document.getElementById('client-list');
-  list.innerHTML = '';
-  state.clients.forEach((c,i) => {
+function renderClients(){
+  const el = document.getElementById('client-list'); el.innerHTML='';
+  S.clients.forEach((c,i)=>{
     const d = document.createElement('div');
-    d.className = 'client-item'+(c.id===state.activeClientId?' active':'');
-    d.innerHTML = `<div class="client-avatar chip-${i%6}">${c.name.charAt(0).toUpperCase()}</div><div class="client-info"><div class="client-name">${esc(c.name)}</div><div class="client-niche">${esc(c.niche||'—')}</div></div>`;
-    d.onclick = () => loadClient(c.id);
-    list.appendChild(d);
+    d.className='client-item'+(c.isAdmin?' admin-item':'')+(c.id===S.activeClientId?' active':'');
+    const col = c.isAdmin ? 'c0' : `c${i%6}`;
+    d.innerHTML=`<div class="client-avatar ${col}">${c.name.charAt(0).toUpperCase()}</div><div class="client-info"><div class="client-name">${esc(c.name)}${c.isAdmin?' ⭐':''}</div><div class="client-niche">${esc(c.niche?.split('&')[0]||'—')}</div></div>`;
+    d.onclick=()=>{ loadClient(c.id); closeSidebar(); };
+    el.appendChild(d);
   });
 }
 
-function loadClient(id) {
-  state.activeClientId = id; save(); renderClients();
-  const c = state.clients.find(x=>x.id===id); if(!c) return;
-  document.getElementById('topbar-name').textContent = c.name;
-  const ne = document.getElementById('topbar-niche');
-  ne.textContent = c.niche||''; ne.style.display = c.niche?'':'none';
-  document.getElementById('p-name').value = c.name||'';
-  document.getElementById('p-niche').value = c.niche||'';
-  document.getElementById('p-goal').value = c.goal||'';
-  document.getElementById('p-audience').value = c.audience||'';
-  document.getElementById('p-products').value = c.products||'';
-  document.getElementById('p-tone').value = c.tone||'';
-  document.getElementById('p-strategy').value = c.strategy||'';
-  document.getElementById('p-social').value = c.social||'';
-  document.getElementById('quick-actions').style.display = 'flex';
-  renderDiagnosis(id);
-  renderHistory(id);
+function loadClient(id){
+  S.activeClientId=id; save(); renderClients();
+  const c=S.clients.find(x=>x.id===id); if(!c) return;
+  document.getElementById('topbar-name').textContent=c.name;
+  const ne=document.getElementById('topbar-niche');
+  ne.textContent=c.isAdmin?'Admin ⭐':(c.niche||'');
+  ne.style.display=(c.niche||c.isAdmin)?'':'none';
+  document.getElementById('p-name').value=c.name||'';
+  document.getElementById('p-niche').value=c.niche||'';
+  document.getElementById('p-goal').value=c.goal||'';
+  document.getElementById('p-audience').value=c.audience||'';
+  document.getElementById('p-products').value=c.products||'';
+  document.getElementById('p-tone').value=c.tone||'';
+  document.getElementById('p-strategy').value=c.strategy||'';
+  document.getElementById('p-social').value=c.social||'';
+  document.getElementById('quick-bar').style.display='flex';
+  renderDiag(id); renderHistory(id);
 }
 
-function renderDiagnosis(id) {
-  const area = document.getElementById('diagnosis-area');
-  const diag = state.diagnoses[id];
-  if(!diag) { area.innerHTML=''; return; }
-  const cls = diag.score >= 60 ? '' : diag.score >= 30 ? 'warn' : 'error';
-  area.innerHTML = `<div class="diagnosis-banner ${cls}">
-    <div class="diagnosis-banner-title">${diag.score>=60?'✅':'⚠️'} Diagnóstico Concluído — Score ${diag.score}/100</div>
-    <div class="diagnosis-banner-text">${esc(diag.summary)}</div>
-  </div>`;
+function renderDiag(id){
+  const area=document.getElementById('diag-area'); const d=S.diagnoses?.[id];
+  if(!d){area.innerHTML='';return;}
+  const cls=d.score>=50?'diag-ok':'diag-warn';
+  area.innerHTML=`<div class="diag-banner ${cls}"><div class="diag-title">${d.score>=50?'✅':'⚠️'} Score ${d.score}/100 — ${new Date(d.ts||Date.now()).toLocaleDateString('pt')}</div><div class="diag-text">${esc(d.summary)}</div></div>`;
 }
 
-function renderHistory(id) {
-  const msgs = document.getElementById('messages');
-  msgs.innerHTML = '';
-  const history = state.histories[id]||[];
-  if(!history.length) {
-    const c = state.clients.find(x=>x.id===id);
-    const hasDiag = !!state.diagnoses[id];
-    msgs.innerHTML = `<div class="welcome-state"><div class="welcome-serif">${hasDiag?'Diagnóstico pronto,':'Olá,'} <em>${esc(c?.name||'')}</em></div><p class="welcome-sub">${hasDiag?'A IA já analisou as páginas do cliente. Usa os botões acima para gerar estratégias baseadas no diagnóstico.':'Usa os botões acima para gerar estratégias, conteúdo e campanhas. Ou adiciona as redes sociais e clica em Analisar.'}</p></div>`;
+function renderHistory(id){
+  const msgs=document.getElementById('messages'); msgs.innerHTML='';
+  const h=S.histories[id]||[];
+  if(!h.length){
+    const c=S.clients.find(x=>x.id===id);
+    const hasDiag=!!S.diagnoses?.[id];
+    msgs.innerHTML=`<div class="welcome-state"><div id="logo-fallback-w" style="width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--navy);margin:0 auto 14px;">Z</div><div class="welcome-title">${hasDiag?'Pronto,':'Olá,'} <span>${esc(c?.name?.split(' ')[0]||'')}</span></div><p class="welcome-sub">${hasDiag?'Diagnóstico completo. Usa os botões acima para gerar conteúdo com base na análise.':'Usa os botões acima ou escreve directamente o que precisas.'}</p></div>`;
     return;
   }
-  history.forEach(m => { if(m.role==='system') return; addMsgEl(m.role, m.content, m.html||false, false); });
-  msgs.scrollTop = msgs.scrollHeight;
+  h.forEach(m=>{ if(m.role==='system') return; addMsg(m.role,m.content,false); });
+  msgs.scrollTop=msgs.scrollHeight;
 }
 
-// ── SOCIAL ANALYSIS ──
-async function analyseSocials() {
-  if(!state.apiKey) { showToast('Configura a API key nas ⚙ Configurações primeiro.','error'); openSettings(); return; }
-  const social = document.getElementById('p-social').value.trim();
-  if(!social) { showToast('Adiciona as redes sociais primeiro.','error'); return; }
-  const clientName = document.getElementById('p-name').value.trim() || 'este cliente';
-  const niche = document.getElementById('p-niche').value.trim() || '';
-  const btn = document.getElementById('analyse-btn');
-  btn.disabled = true; btn.textContent = '⏳ A analisar...';
+// ── IMAGE GENERATION ──
+function imgUrl(prompt,w=1080,h=1080){
+  return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt+', professional photography, high quality, vibrant, sharp focus')}?width=${w}&height=${h}&nologo=true&seed=${Math.floor(Math.random()*99999)}`;
+}
 
-  // Show scanning indicator in chat
-  const welcome = document.getElementById('welcome');
-  if(welcome) welcome.remove();
-  const msgs = document.getElementById('messages');
-  const scanDiv = document.createElement('div');
-  scanDiv.className = 'msg assistant'; scanDiv.id = 'scan-indicator';
-  scanDiv.innerHTML = `<div class="msg-avatar">Z</div><div class="scanning-bubble"><div class="scan-spinner"></div><div><div class="scan-text">A pesquisar e analisar as páginas...</div><div class="scan-sub">Instagram, Facebook, presença online</div></div></div>`;
-  msgs.appendChild(scanDiv);
-  msgs.scrollTop = msgs.scrollHeight;
+async function genImage(prompt, containerId, btnEl){
+  if(btnEl){btnEl.disabled=true;btnEl.textContent='⏳ A gerar...';}
+  const wrap=document.getElementById(containerId);
+  if(!wrap) return;
+  wrap.style.display='block';
+  wrap.innerHTML=`<div class="img-loading"><div class="spin"></div><span>A gerar imagem...</span></div>`;
+  const url=imgUrl(prompt);
+  const img=new Image();
+  img.onload=()=>{
+    wrap.innerHTML=`<img src="${url}" alt="Imagem gerada" /><button class="img-dl" onclick="window.open('${url}','_blank')">⬇ Guardar</button>`;
+    if(btnEl){btnEl.textContent='🖼️ Regenerar';btnEl.disabled=false;}
+  };
+  img.onerror=()=>{wrap.innerHTML='<div style="padding:12px;font-size:12px;color:#fca5a5;background:var(--navy3);border-radius:8px">Erro ao gerar. Tenta novamente.</div>';if(btnEl){btnEl.disabled=false;btnEl.textContent='🎨 Gerar Imagem';}};
+  img.src=url;
+}
 
-  const prompt = `Faz uma análise completa da presença digital do seguinte cliente de marketing:
+async function genSceneImg(reelId,sceneIdx,encodedPrompt){
+  const prompt=decodeURIComponent(encodedPrompt);
+  const ph=document.getElementById(`sph_${reelId}_${sceneIdx}`); if(!ph) return;
+  ph.innerHTML='<div class="spin" style="width:14px;height:14px"></div>';
+  const url=imgUrl(prompt,512,512);
+  const img=new Image();
+  img.onload=()=>{ const w=ph.parentElement; w.innerHTML=`<img src="${url}" style="width:70px;height:70px;object-fit:cover;border-radius:7px;border:1px solid var(--border);cursor:pointer" onclick="window.open('${url}','_blank')" />`; };
+  img.onerror=()=>{ ph.innerHTML='❌'; };
+  img.src=url;
+}
 
-Nome: ${clientName}
-Nicho: ${niche}
-Redes Sociais indicadas: ${social}
-
-TAREFA: Usa o web search para pesquisar cada perfil/página mencionado. Pesquisa também pelo nome da empresa/marca para encontrar informações adicionais.
-
-Analisa e reporta sobre:
-1. PRESENÇA ONLINE - O perfil existe? Está activo? Quantos seguidores aproximadamente?
-2. QUALIDADE DO CONTEÚDO - Que tipo de conteúdo publicam? Com que frequência?
-3. ENGAJAMENTO - Há interação com o público? Comentários, partilhas, reacções?
-4. PONTOS FRACOS - Onde estão a falhar? O que está em falta?
-5. OPORTUNIDADES - O que podem fazer para crescer rapidamente?
-6. SCORE - Dá uma pontuação de 0 a 100 à presença digital actual (0=inexistente, 100=excelente)
-
-Formato da resposta:
-- Começa com "SCORE: XX/100"
-- Depois faz a análise detalhada por tópicos
-- Termina com "RESUMO:" numa linha curta com os 2-3 pontos mais críticos
-- Responde em português
-- Sê directo e profissional, como um consultor de marketing digital`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':state.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body: JSON.stringify({
-        model: state.model,
-        max_tokens: 1500,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
-        messages:[{role:'user',content:prompt}]
-      })
-    });
-    const data = await res.json();
-    document.getElementById('scan-indicator')?.remove();
-
-    if(!res.ok) { showToast(data.error?.message||'Erro na análise','error'); btn.disabled=false; btn.textContent='🔍 Analisar Páginas Agora'; return; }
-
-    // extract text from content blocks
-    const fullText = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
-
-    // parse score
-    const scoreMatch = fullText.match(/SCORE:\s*(\d+)/i);
-    const score = scoreMatch ? parseInt(scoreMatch[1]) : 40;
-
-    // parse summary
-    const resumoMatch = fullText.match(/RESUMO:\s*(.+)/i);
-    const summary = resumoMatch ? resumoMatch[1].trim() : 'Análise concluída.';
-
-    // store diagnosis
-    if(!state.diagnoses) state.diagnoses = {};
-    state.diagnoses[state.activeClientId] = { score, summary, full:fullText, date:new Date().toLocaleDateString('pt') };
-
-    // inject into client history as context
-    if(!state.histories[state.activeClientId]) state.histories[state.activeClientId]=[];
-
-    // show in chat as special card
-    const msgDiv = document.createElement('div');
-    msgDiv.className = 'msg assistant';
-    const scoreColor = score>=60?'var(--green)':score>=30?'#92660a':'#dc2626';
-    msgDiv.innerHTML = `<div class="msg-avatar">Z</div><div class="bubble">
-      <div class="analysis-card">
-        <div class="analysis-card-header">
-          <span class="analysis-badge badge-scan">Diagnóstico Digital</span>
-          <span class="analysis-title">${esc(clientName)}</span>
-        </div>
-        <div class="analysis-metrics">
-          <div class="metric-box"><div class="metric-val" style="color:${scoreColor}">${score}</div><div class="metric-label">Score /100</div></div>
-          <div class="metric-box"><div class="metric-val">${score>=60?'✅':score>=30?'⚠️':'🔴'}</div><div class="metric-label">Estado</div></div>
-          <div class="metric-box"><div class="metric-val" style="font-size:12px">${new Date().toLocaleDateString('pt')}</div><div class="metric-label">Data</div></div>
-        </div>
-        <div class="analysis-body" style="margin-top:12px">${esc(fullText)}</div>
-      </div>
-      <div style="margin-top:12px;font-size:13px;color:var(--ink2)">✅ Diagnóstico guardado no perfil. Podes agora pedir estratégias — a IA vai usar esta análise como base.</div>
-    </div>`;
-    msgs.appendChild(msgDiv);
-    msgs.scrollTop = msgs.scrollHeight;
-
-    // Add to history as assistant context
-    state.histories[state.activeClientId].push({role:'assistant', content:`[DIAGNÓSTICO DIGITAL CONCLUÍDO]\n${fullText}`, html:false});
-    save();
-    renderDiagnosis(state.activeClientId);
-    showToast('Análise concluída! Score: '+score+'/100', 'success');
-
-  } catch(e) {
-    document.getElementById('scan-indicator')?.remove();
-    showToast('Erro na ligação: '+e.message,'error');
+function genAllScenes(reelId,count){
+  for(let i=0;i<count;i++){
+    const ph=document.getElementById(`sph_${reelId}_${i}`);
+    if(ph){const oc=ph.getAttribute('onclick');if(oc){const m=oc.match(/genSceneImg\('(.+?)',(\d+),'(.+?)'\)/);if(m)genSceneImg(m[1],parseInt(m[2]),m[3]);}}
   }
-
-  btn.disabled=false; btn.textContent='🔍 Analisar Novamente';
 }
 
-// ── CHAT ──
-function buildSystemPrompt(client) {
-  const diag = state.diagnoses?.[client.id];
-  const diagSection = diag ? `\n\nDIAGNÓSTICO DIGITAL DO CLIENTE (score: ${diag.score}/100, analisado em ${diag.date}):\n${diag.full}\n\nUSA ESTE DIAGNÓSTICO como base para todas as estratégias. Refere os problemas encontrados e propõe soluções específicas.` : '';
-  return `Você é a Zala AI, sistema de agência de marketing digital automatizada. Actua como uma equipa completa de marketing.
+// ── PARSE BLOCKS ──
+function parsePost(block){
+  const leg=block.match(/LEGENDA:\s*([\s\S]*?)(?=VISUAL:|$)/i);
+  const vis=block.match(/VISUAL:\s*([\s\S]*?)$/i);
+  return{legenda:leg?leg[1].trim():'',visual:vis?vis[1].trim():''};
+}
+function parseReel(block){
+  const tit=block.match(/TITULO:\s*(.+)/i);
+  const gan=block.match(/GANCHO:\s*(.+)/i);
+  const leg=block.match(/LEGENDA:\s*([\s\S]*?)(?=CENA1:|$)/i);
+  const mus=block.match(/MUSICA:\s*(.+)/i);
+  const cenas=[];
+  for(let i=1;i<=8;i++){const m=block.match(new RegExp(`CENA${i}:\\s*(.+)`,'i'));if(m){const p=m[1].split('|');cenas.push({dur:p[0]?.trim()||'',desc:p[1]?.trim()||'',visual:p[2]?.trim()||''}); }}
+  return{titulo:tit?tit[1].trim():'Reel',gancho:gan?gan[1].trim():'',legenda:leg?leg[1].trim():'',musica:mus?mus[1].trim():'',cenas};
+}
 
-PERFIL DO CLIENTE:
+function buildPostCard(data,idx){
+  const id='p_'+Date.now()+'_'+idx;
+  const div=document.createElement('div');
+  div.className='post-card';
+  div._vp=data.visual||data.legenda;
+  div.innerHTML=`
+    <span class="card-badge badge-post">📸 Post</span>
+    <div class="post-text">${esc(data.legenda)}</div>
+    ${data.visual?`<div class="visual-hint"><div class="visual-hint-label">📷 Como fazer a foto</div><div class="visual-hint-text">${esc(data.visual)}</div></div>`:''}
+    <div class="card-actions">
+      <button class="gen-btn" id="gb_${id}" onclick="triggerGen('${id}',this)">🎨 Gerar Imagem</button>
+      <button class="copy-btn2" onclick="cpText('${id}_t',this)">📋 Copiar</button>
+    </div>
+    <div id="ir_${id}" style="display:none" class="img-result"></div>
+    <textarea id="${id}_t" style="position:absolute;opacity:0;pointer-events:none;height:0;width:0">${esc(data.legenda)}</textarea>`;
+  return div;
+}
+
+function buildReelCard(data,idx){
+  const id='r_'+Date.now()+'_'+idx;
+  const div=document.createElement('div');
+  div.className='reel-card';
+  const scenesHtml=data.cenas.map((c,i)=>`
+    <div class="scene">
+      <div class="scene-n">${i+1}</div>
+      <div class="scene-body">
+        <div class="scene-dur">${esc(c.dur)}</div>
+        <div class="scene-desc">${esc(c.desc)}</div>
+        ${c.visual?`<div class="scene-vis">📷 ${esc(c.visual)}</div>`:''}
+      </div>
+      <div class="scene-img"><div class="scene-ph" id="sph_${id}_${i}" onclick="genSceneImg('${id}',${i},'${encodeURIComponent(c.visual||c.desc)}')" title="Gerar imagem desta cena">🎬</div></div>
+    </div>`).join('');
+  div.innerHTML=`
+    <span class="card-badge badge-reel">🎬 Reel</span>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px">${esc(data.titulo)}</div>
+    ${data.gancho?`<div class="reel-hook">🎯 <strong>Gancho:</strong> ${esc(data.gancho)}</div>`:''}
+    <div class="scenes">${scenesHtml}</div>
+    ${data.legenda?`<div style="margin-top:10px;padding:9px 11px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text2)"><strong>📝 Legenda:</strong> ${esc(data.legenda)}</div>`:''}
+    ${data.musica?`<div class="reel-footer">🎵 Música: ${esc(data.musica)}</div>`:''}
+    <div class="card-actions" style="margin-top:10px">
+      <button class="gen-btn" onclick="genAllScenes('${id}',${data.cenas.length})">🎨 Gerar todas as cenas</button>
+      ${data.legenda?`<button class="copy-btn2" onclick="navigator.clipboard.writeText('${esc(data.legenda)}').then(()=>showToast('Copiado!','success'))">📋 Copiar legenda</button>`:''}
+    </div>`;
+  return div;
+}
+
+async function triggerGen(id,btn){
+  const card=btn.closest('.post-card');
+  const prompt=card?._vp||'professional marketing photo Angola';
+  await genImage(prompt,'ir_'+id,btn);
+}
+
+function cpText(taId,btn){
+  const ta=document.getElementById(taId); if(!ta) return;
+  navigator.clipboard.writeText(ta.value).then(()=>{btn.textContent='✅ Copiado!';setTimeout(()=>btn.textContent='📋 Copiar',2000);});
+}
+
+function renderReply(reply){
+  const welcome=document.getElementById('welcome'); if(welcome) welcome.remove();
+  const msgs=document.getElementById('messages');
+  const wrapper=document.createElement('div');
+  wrapper.className='msg assistant';
+  const bubble=document.createElement('div'); bubble.className='bubble';
+  wrapper.innerHTML='<div class="avatar">Z</div>';
+  wrapper.appendChild(bubble);
+  msgs.appendChild(wrapper);
+  const parts=reply.split(/(%%POST%%[\s\S]*?%%END%%|%%REEL%%[\s\S]*?%%END%%)/g);
+  let pi=0,ri=0;
+  parts.forEach(part=>{
+    const t=part.trim();
+    if(t.startsWith('%%POST%%')){
+      const data=parsePost(t.replace('%%POST%%','').replace('%%END%%','').trim());
+      bubble.appendChild(buildPostCard(data,pi++));
+    } else if(t.startsWith('%%REEL%%')){
+      const data=parseReel(t.replace('%%REEL%%','').replace('%%END%%','').trim());
+      bubble.appendChild(buildReelCard(data,ri++));
+    } else if(t){
+      const p=document.createElement('div');
+      p.style.cssText='white-space:pre-wrap;word-break:break-word;margin-bottom:6px;font-size:13.5px;line-height:1.7;';
+      p.textContent=t; bubble.appendChild(p);
+    }
+  });
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function addMsg(role,content,scroll=true){
+  const welcome=document.getElementById('welcome'); if(welcome) welcome.remove();
+  const msgs=document.getElementById('messages');
+  const div=document.createElement('div'); div.className=`msg ${role}`;
+  div.innerHTML=`<div class="avatar">${role==='user'?'Tu':'Z'}</div><div class="bubble" style="white-space:pre-wrap">${esc(content)}</div>`;
+  msgs.appendChild(div); if(scroll) msgs.scrollTop=msgs.scrollHeight;
+}
+
+function addTyping(){
+  const welcome=document.getElementById('welcome'); if(welcome) welcome.remove();
+  const msgs=document.getElementById('messages');
+  const div=document.createElement('div'); div.className='msg assistant'; div.id='typing';
+  div.innerHTML='<div class="avatar">Z</div><div class="typing-bubble"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>';
+  msgs.appendChild(div); msgs.scrollTop=msgs.scrollHeight;
+}
+
+// ── SYSTEM PROMPT ──
+function buildSys(client){
+  const diag=S.diagnoses?.[client.id];
+  const diagPart=diag?`\n\nDIAGNÓSTICO DIGITAL (score ${diag.score}/100, ${new Date(diag.ts||Date.now()).toLocaleDateString('pt')}):\n${diag.full}\n\nUsa este diagnóstico como base para todas as estratégias.`:'';
+  const adminCtx=client.isAdmin?`\n\nESTAS SÃO AS INFORMAÇÕES DA PRÓPRIA AGÊNCIA — quando trabalhares para a Zala Digital, actua como se fosses o departamento de marketing interno da agência. Cria conteúdo que demonstre expertise, atrai clientes B2B (pequenos negócios) em Angola e posiciona a Zala Digital como referência em marketing digital com IA.`:'';
+  return `Você é a Zala AI, o sistema de inteligência artificial da Zala Digital — uma agência de marketing digital e gestão de redes sociais em Angola. Actua como uma equipa completa de marketing.
+
+PERFIL${client.isAdmin?' (CONTA ADMIN — PRÓPRIA AGÊNCIA)':''}:
 - Nome: ${client.name}
 - Nicho: ${client.niche||'não definido'}
 - Objetivo: ${client.goal||'não definido'}
@@ -620,325 +659,143 @@ PERFIL DO CLIENTE:
 - Produtos/Serviços: ${client.products||'não definido'}
 - Tom: ${client.tone||'não definido'}
 - Estratégia actual: ${client.strategy||'não definida'}
-- Redes sociais: ${client.social||'não definidas'}${diagSection}
+- Redes sociais: ${client.social||'não definidas'}${diagPart}${adminCtx}
 
 REGRAS:
-1. Usa SEMPRE o perfil e diagnóstico do cliente
+1. Usa SEMPRE o perfil do cliente antes de responder
 2. Estratégias PRÁTICAS e aplicáveis, nunca teóricas
-3. Foca em crescimento, vendas e conteúdo para redes sociais
-4. Actua como agência digital profissional de topo
+3. Foca em resultados: crescimento, vendas, conteúdo para redes sociais
+4. Actua como agência digital profissional de topo em Angola
 5. Responde sempre em português
 
-FORMATO ESPECIAL PARA CONTEÚDO VISUAL:
-Quando gerares legendas para posts, usa este bloco para CADA legenda:
+FORMATO PARA CONTEÚDO VISUAL:
+Para posts usa:
 %%POST%%
-LEGENDA: [texto completo da legenda com emojis e hashtags]
-VISUAL: [descrição detalhada em inglês da foto/imagem ideal para este post — específica, visual, cinematográfica]
+LEGENDA: [legenda completa com emojis e hashtags]
+VISUAL: [descrição em inglês da foto/imagem ideal — específica e cinematográfica]
 %%END%%
 
-Quando gerares ideias de Reels, usa este bloco para CADA reel:
+Para reels usa:
 %%REEL%%
-TITULO: [título do reel]
-GANCHO: [frase de abertura para os primeiros 3 segundos]
-LEGENDA: [legenda para acompanhar o reel]
+TITULO: [título]
+GANCHO: [frase de abertura — primeiros 3 segundos]
+LEGENDA: [legenda para o reel]
 CENA1: [duração]|[o que acontece]|[descrição visual em inglês para gerar imagem]
 CENA2: [duração]|[o que acontece]|[descrição visual em inglês para gerar imagem]
 CENA3: [duração]|[o que acontece]|[descrição visual em inglês para gerar imagem]
-MUSICA: [sugestão de música/som]
-%%END%%
-
-Fora destes blocos, escreve normalmente em português.`;
+MUSICA: [sugestão de música]
+%%END%%`;
 }
 
-const QUICK_PROMPTS = {
-  estrategia:'Com base no diagnóstico das páginas do cliente, cria uma estratégia de marketing digital para o próximo mês. Inclui canais prioritários, objectivos, métricas e plano de acção semanal.',
+const QP={
+  estrategia:'Com base no perfil do cliente, cria uma estratégia de marketing digital completa para o próximo mês. Inclui canais, objectivos, métricas e plano de acção semanal.',
   conteudo:'Cria um plano de conteúdo para as redes sociais para as próximas 2 semanas. Inclui temas, formatos e 5 legendas prontas.',
-  legendas:'Gera 10 legendas prontas para o Instagram. Variadas: educativo, promocional, emocional, interativo. Inclui hashtags.',
-  vendas:'Cria uma estratégia de vendas para este mês. Funil de vendas, scripts de abordagem e 3 promoções para lançar.',
-  email:'Campanha de email marketing com 3 emails: boas-vindas, nurturing e oferta. Inclui assunto e call-to-action.',
-  reels:'10 ideias de Reels/TikToks para o nicho. Para cada um: gancho, roteiro resumido e legenda.',
-  analise:'Análise do mercado e concorrência. Oportunidades, tendências e diferenciadores a explorar.'
+  legendas:'Gera 8 legendas prontas para o Instagram. Variadas: educativo, promocional, emocional, interativo. Com emojis e hashtags.',
+  reels:'Cria 3 ideias de Reels completas com gancho, storyboard por cenas e legenda.',
+  vendas:'Cria uma estratégia de vendas para este mês. Funil, scripts de abordagem e 3 promoções.',
+  email:'Campanha de email marketing com 3 emails: boas-vindas, nurturing e oferta.',
+  analise:'Análise do mercado e concorrência. Oportunidades e diferenciadores a explorar.'
 };
 
-function quickAction(key) {
-  document.getElementById('user-input').value = QUICK_PROMPTS[key]||'';
-  sendMessage();
-}
+function qa(key){ document.getElementById('user-input').value=QP[key]||''; sendMessage(); }
 
-// ── IMAGE GENERATION (Pollinations.ai — free, no key needed) ──
-function buildImageUrl(prompt, w=1080, h=1080) {
-  return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt+'  high quality, professional photography, vivid colors, sharp focus')}?width=${w}&height=${h}&nologo=true&seed=${Math.floor(Math.random()*99999)}`;
-}
-
-async function generateImage(prompt, imgEl, btnEl) {
-  if(btnEl) { btnEl.disabled=true; btnEl.textContent='⏳ A gerar...'; }
-  const url = buildImageUrl(prompt);
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      imgEl.src = url;
-      imgEl.style.display = 'block';
-      imgEl.parentElement.querySelector('.img-loading')?.remove();
-      if(btnEl) { btnEl.textContent='🖼️ Regenerar'; btnEl.disabled=false; }
-      resolve(url);
-    };
-    img.onerror = () => {
-      if(btnEl) { btnEl.textContent='❌ Erro — tentar novamente'; btnEl.disabled=false; }
-      resolve(null);
-    };
-    img.src = url;
-  });
-}
-
-// Parse %%POST%% blocks
-function parsePostBlock(block) {
-  const legMatch = block.match(/LEGENDA:\s*([\s\S]*?)(?=VISUAL:|$)/i);
-  const visMatch = block.match(/VISUAL:\s*([\s\S]*?)$/i);
-  return {
-    legenda: legMatch?legMatch[1].trim():'',
-    visual: visMatch?visMatch[1].trim():''
-  };
-}
-
-// Parse %%REEL%% blocks
-function parseReelBlock(block) {
-  const titMatch = block.match(/TITULO:\s*(.+)/i);
-  const ganMatch = block.match(/GANCHO:\s*(.+)/i);
-  const legMatch = block.match(/LEGENDA:\s*([\s\S]*?)(?=CENA1:|$)/i);
-  const musMatch = block.match(/MUSICA:\s*(.+)/i);
-  const cenas = [];
-  for(let i=1;i<=6;i++) {
-    const m = block.match(new RegExp(`CENA${i}:\\s*(.+)`, 'i'));
-    if(m) {
-      const parts = m[1].split('|');
-      cenas.push({ dur:parts[0]?.trim()||'', desc:parts[1]?.trim()||'', visual:parts[2]?.trim()||'' });
-    }
-  }
-  return {
-    titulo: titMatch?titMatch[1].trim():'Reel',
-    gancho: ganMatch?ganMatch[1].trim():'',
-    legenda: legMatch?legMatch[1].trim():'',
-    musica: musMatch?musMatch[1].trim():'',
-    cenas
-  };
-}
-
-function renderPostCard(data, idx) {
-  const id = 'post_'+Date.now()+'_'+idx;
-  const div = document.createElement('div');
-  div.className = 'content-card';
-  div.innerHTML = `
-    <div class="content-card-meta">
-      <span class="content-type-badge badge-post">📸 Post Instagram</span>
-    </div>
-    <div class="content-card-body">${esc(data.legenda)}</div>
-    ${data.visual?`<div class="visual-suggestion">
-      <div class="visual-suggestion-label">📷 Sugestão de imagem</div>
-      <div class="visual-suggestion-text">${esc(data.visual)}</div>
-    </div>`:''}
-    <div class="visual-actions">
-      <button class="gen-img-btn" id="genbtn_${id}" onclick="triggerGenImage('${id}')">🎨 Gerar Imagem</button>
-      <button class="copy-btn" onclick="copyText(this,'${id}_leg')">📋 Copiar legenda</button>
-    </div>
-    <div id="imgwrap_${id}" style="display:none" class="gen-image-wrap">
-      <img id="img_${id}" style="display:none" />
-      <button class="img-dl-btn" onclick="downloadImg('${id}')">⬇ Guardar</button>
-    </div>
-    <textarea id="${id}_leg" style="position:absolute;opacity:0;pointer-events:none;height:0">${esc(data.legenda)}</textarea>
-  `;
-  div._visualPrompt = data.visual || data.legenda;
-  div._postId = id;
-  return div;
-}
-
-function renderReelCard(data, idx) {
-  const id = 'reel_'+Date.now()+'_'+idx;
-  const scenesHtml = data.cenas.map((c,i)=>`
-    <div class="scene-row">
-      <div class="scene-num">${i+1}</div>
-      <div class="scene-body">
-        <div class="scene-duration">${esc(c.dur)}</div>
-        <div class="scene-desc">${esc(c.desc)}</div>
-        ${c.visual?`<div class="scene-visual">📷 ${esc(c.visual)}</div>`:''}
-      </div>
-      <div class="scene-img-wrap">
-        <div class="scene-img-placeholder" id="sph_${id}_${i}" onclick="genSceneImg('${id}',${i},'${encodeURIComponent(c.visual||c.desc)}')" title="Clica para gerar imagem desta cena">🎬</div>
-      </div>
-    </div>`).join('');
-
-  const div = document.createElement('div');
-  div.className = 'reel-card';
-  div.innerHTML = `
-    <div class="reel-card-header">
-      <span class="content-type-badge badge-reel">🎬 Reel</span>
-      <span class="reel-title">${esc(data.titulo)}</span>
-    </div>
-    ${data.gancho?`<div style="background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:13px;color:var(--accent)"><strong>🎯 Gancho:</strong> ${esc(data.gancho)}</div>`:''}
-    <div class="scenes-grid">${scenesHtml}</div>
-    ${data.legenda?`<div style="margin-top:12px;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--ink2)"><strong>📝 Legenda:</strong> ${esc(data.legenda)}</div>`:''}
-    ${data.musica?`<div style="margin-top:8px;font-size:12px;color:var(--ink3)">🎵 Música sugerida: ${esc(data.musica)}</div>`:''}
-    <div class="reel-actions">
-      <button class="gen-img-btn" onclick="genAllScenes('${id}',${data.cenas.length})">🎨 Gerar todas as cenas</button>
-      <button class="copy-btn" onclick="copyTextDirect('${data.legenda}')">📋 Copiar legenda</button>
-    </div>
-  `;
-  div._reelId = id;
-  div._cenas = data.cenas;
-  return div;
-}
-
-async function triggerGenImage(id) {
-  const btn = document.getElementById('genbtn_'+id);
-  const wrap = document.getElementById('imgwrap_'+id);
-  const imgEl = document.getElementById('img_'+id);
-  // find prompt from the card
-  const card = btn.closest('.content-card');
-  const prompt = card._visualPrompt || 'professional marketing photo';
-  wrap.style.display = 'block';
-  wrap.innerHTML = `<div class="img-loading"><div class="scan-spinner"></div><span>A gerar imagem...</span></div><button class="img-dl-btn" onclick="downloadImg('${id}')">⬇ Guardar</button>`;
-  const url = buildImageUrl(prompt);
-  const img = new Image();
-  img.onload = () => {
-    wrap.innerHTML = `<img src="${url}" style="width:100%;border-radius:10px;display:block" /><button class="img-dl-btn" onclick="window.open('${url}','_blank')">⬇ Guardar</button>`;
-    if(btn){btn.textContent='🖼️ Regenerar';btn.disabled=false;}
-  };
-  img.onerror = () => { wrap.innerHTML='<div style="padding:12px;font-size:12px;color:#dc2626">Erro ao gerar imagem. Tenta novamente.</div>'; if(btn)btn.disabled=false; };
-  img.src = url;
-}
-
-async function genSceneImg(reelId, sceneIdx, encodedPrompt) {
-  const prompt = decodeURIComponent(encodedPrompt);
-  const ph = document.getElementById(`sph_${reelId}_${sceneIdx}`);
-  if(!ph) return;
-  ph.innerHTML = '<div style="font-size:10px;color:var(--ink3);text-align:center;padding:4px">⏳</div>';
-  const url = buildImageUrl(prompt, 512, 512);
-  const img = new Image();
-  img.onload = () => {
-    const wrap = ph.parentElement;
-    wrap.innerHTML = `<img src="${url}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--border);cursor:pointer" onclick="window.open('${url}','_blank')" title="Clica para abrir em tamanho completo" />`;
-  };
-  img.onerror = () => { ph.innerHTML='❌'; };
-  img.src = url;
-}
-
-function genAllScenes(reelId, count) {
-  for(let i=0;i<count;i++) {
-    const ph = document.getElementById(`sph_${reelId}_${i}`);
-    if(ph) { const onclick = ph.getAttribute('onclick'); if(onclick) { const m = onclick.match(/genSceneImg\('(.+?)',(\d+),'(.+?)'\)/); if(m) genSceneImg(m[1],parseInt(m[2]),m[3]); } }
-  }
-}
-
-function copyText(btn, textareaId) {
-  const ta = document.getElementById(textareaId);
-  if(!ta) return;
-  navigator.clipboard.writeText(ta.value).then(()=>{ btn.textContent='✅ Copiado!'; setTimeout(()=>btn.textContent='📋 Copiar legenda',2000); });
-}
-
-function copyTextDirect(text) {
-  navigator.clipboard.writeText(text).then(()=>showToast('Copiado!','success'));
-}
-
-// Main content renderer — parses assistant reply for blocks
-function renderAssistantReply(reply) {
-  const welcome = document.getElementById('welcome'); if(welcome) welcome.remove();
-  const msgs = document.getElementById('messages');
-  const wrapper = document.createElement('div');
-  wrapper.className = 'msg assistant';
-  wrapper.innerHTML = '<div class="msg-avatar">Z</div><div class="bubble" id="reply_bubble_tmp"></div>';
-  msgs.appendChild(wrapper);
-  const bubble = wrapper.querySelector('.bubble');
-
-  // Split by %%POST%% and %%REEL%% blocks
-  const parts = reply.split(/(%%POST%%[\s\S]*?%%END%%|%%REEL%%[\s\S]*?%%END%%)/g);
-  let postIdx=0, reelIdx=0;
-
-  parts.forEach(part => {
-    const trimmed = part.trim();
-    if(trimmed.startsWith('%%POST%%')) {
-      const block = trimmed.replace('%%POST%%','').replace('%%END%%','').trim();
-      const data = parsePostBlock(block);
-      const card = renderPostCard(data, postIdx++);
-      bubble.appendChild(card);
-    } else if(trimmed.startsWith('%%REEL%%')) {
-      const block = trimmed.replace('%%REEL%%','').replace('%%END%%','').trim();
-      const data = parseReelBlock(block);
-      const card = renderReelCard(data, reelIdx++);
-      bubble.appendChild(card);
-    } else if(trimmed) {
-      const p = document.createElement('div');
-      p.style.cssText = 'white-space:pre-wrap;word-break:break-word;margin-bottom:6px';
-      p.textContent = trimmed;
-      bubble.appendChild(p);
-    }
-  });
-
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function addMsgEl(role, content, isHtml=false, scroll=true) {
-  const welcome = document.getElementById('welcome');
-  if(welcome) welcome.remove();
-  const msgs = document.getElementById('messages');
-  const div = document.createElement('div');
-  div.className = `msg ${role}`;
-  const avatar = role==='user'?'Tu':'Z';
-  div.innerHTML = `<div class="msg-avatar">${avatar}</div><div class="bubble">${isHtml?content:esc(content)}</div>`;
-  msgs.appendChild(div);
-  if(scroll) msgs.scrollTop = msgs.scrollHeight;
-}
-
-function addTyping() {
-  const welcome = document.getElementById('welcome'); if(welcome) welcome.remove();
-  const msgs = document.getElementById('messages');
-  const div = document.createElement('div');
-  div.className='msg assistant'; div.id='typing-indicator';
-  div.innerHTML=`<div class="msg-avatar">Z</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
-  msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
-}
-
-async function sendMessage() {
-  const text = document.getElementById('user-input').value.trim();
-  if(!text||state.isLoading) return;
-  if(!state.apiKey) { showToast('Configura a API key nas ⚙ Configurações.','error'); openSettings(); return; }
-  if(!state.activeClientId) { showToast('Seleciona um cliente primeiro.','error'); return; }
-  const client = state.clients.find(x=>x.id===state.activeClientId); if(!client) return;
-  if(!state.histories[state.activeClientId]) state.histories[state.activeClientId]=[];
-  const history = state.histories[state.activeClientId];
-  state.isLoading=true; document.getElementById('send-btn').disabled=true;
+async function sendMessage(){
+  const text=document.getElementById('user-input').value.trim();
+  if(!text||S.isLoading) return;
+  if(!S.apiKey){showToast('Configura a API key nas ⚙ Config.','error');openSettings();return;}
+  if(!S.activeClientId){showToast('Seleciona um cliente primeiro.','error');return;}
+  const client=S.clients.find(x=>x.id===S.activeClientId); if(!client) return;
+  if(!S.histories[S.activeClientId]) S.histories[S.activeClientId]=[];
+  const h=S.histories[S.activeClientId];
+  S.isLoading=true; document.getElementById('send-btn').disabled=true;
   document.getElementById('user-input').value=''; document.getElementById('user-input').style.height='auto';
-  addMsgEl('user',text,false); history.push({role:'user',content:text}); addTyping();
-
-  const messages = [{role:'system',content:buildSystemPrompt(client)}, ...history.filter(m=>m.role!=='system').map(m=>({role:m.role,content:m.content}))];
-
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+  addMsg('user',text); h.push({role:'user',content:text}); addTyping();
+  try{
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':`Bearer ${state.apiKey}`},
-      body:JSON.stringify({model:state.model, max_tokens:2048, temperature:0.75, messages:[{role:'system',content:buildSystemPrompt(client)}, ...history.filter(m=>m.role!=='system').map(m=>({role:m.role,content:m.content}))]})
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${S.apiKey}`},
+      body:JSON.stringify({model:S.model,max_tokens:2048,temperature:0.75,messages:[{role:'system',content:buildSys(client)},...h.filter(m=>m.role!=='system')]})
     });
-    const data = await res.json();
-    document.getElementById('typing-indicator')?.remove();
-    if(!res.ok) { showToast(data.error?.message||`Erro ${res.status}`,'error'); history.pop(); }
-    else {
-      const reply = data.choices[0].message.content;
-      history.push({role:'assistant',content:reply});
-      renderAssistantReply(reply); save();
-      sendWebhook(client,text,reply);
+    const data=await res.json();
+    document.getElementById('typing')?.remove();
+    if(!res.ok){showToast(data.error?.message||`Erro ${res.status}`,'error');h.pop();}
+    else{
+      const reply=data.choices[0].message.content;
+      h.push({role:'assistant',content:reply});
+      renderReply(reply); save();
+      if(S.webhook) fetch(S.webhook,{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',body:JSON.stringify({ts:new Date().toISOString(),client:client.name,user:text,reply})}).catch(()=>{});
     }
-  } catch(e) { document.getElementById('typing-indicator')?.remove(); showToast('Falha na ligação.','error'); history.pop(); }
-  state.isLoading=false; document.getElementById('send-btn').disabled=false;
+  }catch(e){document.getElementById('typing')?.remove();showToast('Erro de ligação.','error');h.pop();}
+  S.isLoading=false; document.getElementById('send-btn').disabled=false;
 }
 
-async function sendWebhook(client,userMsg,reply) {
-  if(!state.webhook) return;
-  try { await fetch(state.webhook,{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',body:JSON.stringify({timestamp:new Date().toISOString(),client_name:client.name,client_niche:client.niche,user_message:userMsg,assistant_reply:reply})}); } catch(e){}
+// ── SOCIAL ANALYSIS ──
+async function analyseSocials(){
+  if(!S.apiKey){showToast('Configura a API key primeiro.','error');openSettings();return;}
+  const social=document.getElementById('p-social').value.trim();
+  if(!social){showToast('Adiciona as redes sociais primeiro.','error');return;}
+  const name=document.getElementById('p-name').value.trim()||'este cliente';
+  const niche=document.getElementById('p-niche').value.trim()||'';
+  const btn=document.getElementById('analyse-btn');
+  btn.disabled=true; btn.textContent='⏳ A analisar...';
+  const welcome=document.getElementById('welcome'); if(welcome) welcome.remove();
+  const msgs=document.getElementById('messages');
+  const sd=document.createElement('div'); sd.className='msg assistant'; sd.id='scan-ind';
+  sd.innerHTML=`<div class="avatar">Z</div><div class="scan-bubble"><div class="spin"></div><div><div class="scan-text">A pesquisar as páginas online...</div><div class="scan-sub">Instagram, Facebook, presença digital</div></div></div>`;
+  msgs.appendChild(sd); msgs.scrollTop=msgs.scrollHeight;
+  const prompt=`Faz uma análise completa da presença digital do seguinte negócio:
+Nome: ${name} | Nicho: ${niche} | Redes: ${social}
+Pesquisa na internet cada perfil mencionado e também pelo nome do negócio.
+Analisa: 1.PRESENÇA ONLINE 2.CONTEÚDO E FREQUÊNCIA 3.ENGAJAMENTO 4.PONTOS FRACOS 5.OPORTUNIDADES 6.SCORE (0-100)
+Começa com "SCORE: XX/100". Termina com "RESUMO: [2-3 pontos críticos numa linha]". Responde em português, como consultor de marketing digital profissional.`;
+  try{
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${S.apiKey}`},
+      body:JSON.stringify({model:S.model,max_tokens:1200,temperature:0.5,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    document.getElementById('scan-ind')?.remove();
+    if(!res.ok){showToast(data.error?.message||'Erro na análise','error');}
+    else{
+      const full=data.choices[0].message.content;
+      const sm=full.match(/SCORE:\s*(\d+)/i); const score=sm?parseInt(sm[1]):40;
+      const rm=full.match(/RESUMO:\s*(.+)/i); const summary=rm?rm[1].trim():'Análise concluída.';
+      if(!S.diagnoses) S.diagnoses={};
+      S.diagnoses[S.activeClientId]={score,summary,full,ts:Date.now()};
+      const scoreColor=score>=60?'var(--green)':score>=30?'var(--orange)':'#ef4444';
+      const md=document.createElement('div'); md.className='msg assistant';
+      md.innerHTML=`<div class="avatar">Z</div><div class="bubble">
+        <div style="background:var(--navy3);border:1px solid var(--border2);border-radius:10px;padding:14px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <span class="card-badge badge-post">🔍 Diagnóstico Digital</span>
+            <span style="font-size:13px;font-weight:700;color:var(--text)">${esc(name)}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:800;color:${scoreColor}">${score}</div><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px">Score /100</div></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center"><div style="font-size:18px">${score>=60?'✅':score>=30?'⚠️':'🔴'}</div><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px">Estado</div></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center"><div style="font-size:11px;font-weight:600;color:var(--text)">${new Date().toLocaleDateString('pt')}</div><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px">Data</div></div>
+          </div>
+          <div style="font-size:13px;line-height:1.7;color:var(--text2);white-space:pre-wrap">${esc(full)}</div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--text3)">✅ Diagnóstico guardado. A IA vai usar esta análise em todas as estratégias deste cliente.</div>
+      </div>`;
+      msgs.appendChild(md); msgs.scrollTop=msgs.scrollHeight;
+      if(!S.histories[S.activeClientId]) S.histories[S.activeClientId]=[];
+      S.histories[S.activeClientId].push({role:'assistant',content:`[DIAGNÓSTICO]\n${full}`});
+      save(); renderDiag(S.activeClientId);
+      showToast(`Diagnóstico: ${score}/100`,'success');
+    }
+  }catch(e){document.getElementById('scan-ind')?.remove();showToast('Erro: '+e.message,'error');}
+  btn.disabled=false; btn.textContent='🔍 Analisar Novamente';
 }
 
-function saveCurrentClient() {
-  const id=state.activeClientId; if(!id) return showToast('Seleciona um cliente.','error');
-  const c=state.clients.find(x=>x.id===id); if(!c) return;
-  const prevSocial = c.social||'';
-  c.name=document.getElementById('p-name').value.trim()||c.name;
+// ── CLIENT CRUD ──
+function saveClient(){
+  const id=S.activeClientId; if(!id){showToast('Seleciona um cliente.','error');return;}
+  const c=S.clients.find(x=>x.id===id); if(!c) return;
+  const prev=c.social||'';
+  if(!c.isAdmin) c.name=document.getElementById('p-name').value.trim()||c.name;
   c.niche=document.getElementById('p-niche').value.trim();
   c.goal=document.getElementById('p-goal').value.trim();
   c.audience=document.getElementById('p-audience').value.trim();
@@ -948,71 +805,65 @@ function saveCurrentClient() {
   c.social=document.getElementById('p-social').value.trim();
   save(); renderClients();
   document.getElementById('topbar-name').textContent=c.name;
-  document.getElementById('topbar-niche').textContent=c.niche;
   showToast('Perfil guardado ✓','success');
-  // auto-prompt analysis if social changed
-  if(c.social && c.social!==prevSocial) {
-    showToast('Redes sociais alteradas — clica em Analisar para actualizar o diagnóstico.','info');
-  }
+  if(c.social&&c.social!==prev) showToast('Redes sociais alteradas — clica em Analisar para actualizar.','info');
 }
 
-function clearChat() {
-  if(!state.activeClientId) return;
-  state.histories[state.activeClientId]=[];
-  save(); renderHistory(state.activeClientId);
+function openNewClientModal(){
+  document.getElementById('nc-name').value='';
+  document.getElementById('nc-niche').value='';
+  document.getElementById('nc-goal').value='';
+  openModal('modal-new');
 }
 
-function openNewClientModal() {
-  document.getElementById('nc-name').value=''; document.getElementById('nc-niche').value=''; document.getElementById('nc-goal').value='';
-  openModal('new-client-modal');
-}
-
-function createClient() {
+function createClient(){
   const name=document.getElementById('nc-name').value.trim();
   const niche=document.getElementById('nc-niche').value.trim();
   const goal=document.getElementById('nc-goal').value.trim();
   if(!name){showToast('Nome obrigatório.','error');return;}
   const id='c_'+Date.now();
-  state.clients.push({id,name,niche,goal,audience:'',products:'',tone:'',strategy:'',social:''});
-  save(); renderClients(); closeModal('new-client-modal'); loadClient(id);
+  S.clients.push({id,name,niche,goal,audience:'',products:'',tone:'',strategy:'',social:''});
+  save(); renderClients(); closeModal('modal-new'); loadClient(id);
 }
 
-function openSettings() {
-  document.getElementById('s-apikey').value=state.apiKey;
-  document.getElementById('s-model').value=state.model;
-  document.getElementById('s-webhook').value=state.webhook;
-  openModal('settings-modal');
+function clearChat(){
+  if(!S.activeClientId) return;
+  S.histories[S.activeClientId]=[];
+  save(); renderHistory(S.activeClientId);
 }
 
-function saveSettings() {
-  state.apiKey=document.getElementById('s-apikey').value.trim();
-  state.model=document.getElementById('s-model').value;
-  state.webhook=document.getElementById('s-webhook').value.trim();
-  save(); updateApiStatus(); closeModal('settings-modal');
+// ── SETTINGS ──
+function openSettings(){
+  document.getElementById('s-key').value=S.apiKey;
+  document.getElementById('s-model').value=S.model;
+  document.getElementById('s-webhook').value=S.webhook;
+  openModal('modal-settings');
+}
+function saveSettings(){
+  S.apiKey=document.getElementById('s-key').value.trim();
+  S.model=document.getElementById('s-model').value;
+  S.webhook=document.getElementById('s-webhook').value.trim();
+  save(); updateApi(); closeModal('modal-settings');
+}
+function updateApi(){
+  const dot=document.getElementById('api-dot'),label=document.getElementById('api-label');
+  if(S.apiKey&&S.apiKey.startsWith('gsk_')){dot.className='api-dot on';label.textContent='Online';}
+  else{dot.className='api-dot';label.textContent='Sem API';}
 }
 
-function updateApiStatus() {
-  const dot=document.getElementById('api-dot'); const label=document.getElementById('api-label');
-  if(state.apiKey&&state.apiKey.startsWith('gsk_')){dot.className='api-dot on';label.textContent='API ativa';}
-  else{dot.className='api-dot';label.textContent='Sem API key';}
-}
-
-function togglePanel() { document.getElementById('client-panel').classList.toggle('collapsed'); }
+// ── UI ──
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
-
-function showToast(msg, type='info') {
-  const t=document.getElementById('toast');
-  t.className=`toast ${type} show`; t.textContent=msg;
-  setTimeout(()=>t.classList.remove('show'),3500);
-}
-
+function togglePanel(){document.getElementById('client-panel').classList.toggle('collapsed');}
+function openSidebar(){document.getElementById('sidebar').classList.add('mobile-open');document.getElementById('sidebar-overlay').classList.add('active');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('mobile-open');document.getElementById('sidebar-overlay').classList.remove('active');}
+function showToast(msg,type='info'){const t=document.getElementById('toast');t.className=`toast ${type} show`;t.textContent=msg;setTimeout(()=>t.classList.remove('show'),3200);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-const inp=document.getElementById('user-input');
-inp.addEventListener('input',()=>{inp.style.height='auto';inp.style.height=Math.min(inp.scrollHeight,120)+'px';});
-inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}});
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+const inp=document.getElementById('user-input');
+inp.addEventListener('input',()=>{inp.style.height='auto';inp.style.height=Math.min(inp.scrollHeight,110)+'px';});
+inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}});
 
 init();
 </script>
