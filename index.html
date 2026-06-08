@@ -58,7 +58,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .api-dot.on{background:var(--green);box-shadow:0 0 5px var(--green);}
 .view{flex:1;overflow-y:auto;padding:20px 18px;display:none;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;}
 .view.active{display:block;}
-.chat-wrap{flex:1;display:none;flex-direction:column;overflow:hidden;}
+.chat-wrap{flex:1;display:none;flex-direction:column;overflow:hidden;min-width:0;}.chat-wrap.active{display:flex;}
 .chat-wrap.active{display:flex;}
 .qbar{display:flex;gap:6px;padding:9px 18px;background:var(--navy2);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
 .qbar::-webkit-scrollbar{display:none;}
@@ -294,7 +294,7 @@ textarea.fi{min-height:58px;line-height:1.5;}
         </div>
       </div>
     </div>
-    <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;" id="vw">
+    <div style="display:none;flex:1;overflow:hidden;flex-direction:column;" id="vw">
       <div class="view" id="view-autopilot"></div>
       <div class="view" id="view-goals"></div>
       <div class="view" id="view-funnel"></div>
@@ -343,7 +343,7 @@ textarea.fi{min-height:58px;line-height:1.5;}
 <div class="toast" id="toast"></div>
 <script>
 const ADMIN={id:'zala_admin',isAdmin:true,name:'Zala Digital',niche:'Agência de Marketing Digital & Gestão de Redes Sociais',goal:'Conseguir clientes para gestão de redes sociais em Angola',audience:'Pequenos e médios negócios em Angola: lojas, restaurantes, barbearias, clínicas',products:'Gestão de redes sociais, criação de conteúdo, marketing digital, anúncios pagos. Pacotes: Básico/Intermédio/Premium',tone:'Profissional, confiante, moderno e próximo',strategy:'Uso de IA para acelerar criação de conteúdo',social:'Instagram: @zaladigital\nFacebook: facebook.com/zaladigital',targetLeads:20,targetSales:5,targetConv:25};
-let S={apiKey:'',model:'llama-3.3-70b-versatile',webhook:'',clients:[],activeId:null,histories:{},diagnoses:{},isLoading:false};
+let S={apiKey:'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',model:'llama-3.3-70b-versatile',webhook:'https://hook.eu1.make.com/vnp2qw3shtfh95pbg7nuunfu1k5zkwre',clients:[],activeId:null,histories:{},diagnoses:{},isLoading:false};
 let T={campaigns:[],leads:[],sales:[],reports:[]};
 let currentView='chat';
 let apInsights=[];
@@ -415,10 +415,12 @@ function goView(view){
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   const ni=document.getElementById('ni-'+view);if(ni)ni.classList.add('active');
   if(view==='chat'){
+    document.getElementById('chat-wrap').style.display='flex';
     document.getElementById('chat-wrap').classList.add('active');
     const vwEl=document.getElementById('vw');if(vwEl)vwEl.style.display='none';
     if(S.activeId)renderHistory(S.activeId);
   } else {
+    document.getElementById('chat-wrap').style.display='none';
     document.getElementById('chat-wrap').classList.remove('active');
     const vw=document.getElementById('vw');
     vw.style.cssText='flex:1;overflow:hidden;display:flex;flex-direction:column;';
