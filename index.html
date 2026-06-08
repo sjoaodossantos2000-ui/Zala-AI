@@ -407,7 +407,7 @@ function createClient(){
   if(!name){showToast('Nome obrigatório.','err');return;}
   const id='c_'+Date.now();
   S.clients.push({id,name,niche,goal,audience:'',products:'',tone:'',strategy:'',social:'',targetLeads:0,targetSales:0,targetConv:0});
-  saveS();renderClients();closeModal('mo-nc');loadClient(id);
+  saveS();renderClients();closeModal('mo-nc');goView('chat');loadClient(id);
 }
 
 function goView(view){
@@ -416,7 +416,7 @@ function goView(view){
   const ni=document.getElementById('ni-'+view);if(ni)ni.classList.add('active');
   if(view==='chat'){
     document.getElementById('chat-wrap').classList.add('active');
-    document.getElementById('vw').style.display='none';
+    const vwEl=document.getElementById('vw');if(vwEl)vwEl.style.display='none';
     if(S.activeId)renderHistory(S.activeId);
   } else {
     document.getElementById('chat-wrap').classList.remove('active');
@@ -879,22 +879,53 @@ function addTyping(){
 async function sendMsg(){
   const text=document.getElementById('ui').value.trim();
   if(!text||S.isLoading)return;
-  if(!S.apiKey){showToast('Configura a API key.','err');openModal('mo-cfg');return;}
-  if(!S.activeId){showToast('Seleciona um cliente.','err');return;}
-  const client=S.clients.find(x=>x.id===S.activeId);if(!client)return;
+  if(!S.apiKey){showToast('Configura a API key nas Configuracoes.','err');openModal('mo-cfg');return;}
+  if(!S.activeId){showToast('Seleciona um cliente primeiro.','err');return;}
+  const client=S.clients.find(x=>x.id===S.activeId);
+  if(!client){showToast('Cliente nao encontrado.','err');return;}
   if(!S.histories[S.activeId])S.histories[S.activeId]=[];
   const h=S.histories[S.activeId];
-  S.isLoading=true;document.getElementById('sb2').disabled=true;
-  document.getElementById('ui').value='';document.getElementById('ui').style.height='auto';
-  addMsg('user',text);h.push({role:'user',content:text});addTyping();
+  S.isLoading=true;
+  document.getElementById('sb2').disabled=true;
+  const savedText=text;
+  document.getElementById('ui').value='';
+  document.getElementById('ui').style.height='auto';
+  addMsg('user',text);
+  h.push({role:'user',content:text});
+  addTyping();
   try{
-    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${S.apiKey}`},body:JSON.stringify({model:S.model,max_tokens:2048,temperature:.75,messages:[{role:'system',content:buildSys(client)},...h.filter(m=>m.role!=='system')]})});
+    // Keep only last 10 messages to avoid context overflow
+    const recentH=h.filter(m=>m.role!=='system').slice(-10);
+    const sys=buildSys(client);
+    const body={model:S.model,max_tokens:2048,temperature:.75,messages:[{role:'system',content:sys},...recentH]};
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${S.apiKey}`},
+      body:JSON.stringify(body)
+    });
     const data=await res.json();
     document.getElementById('ty')?.remove();
-    if(!res.ok){showToast(data.error?.message||`Erro ${res.status}`,'err');h.pop();}
-    else{const reply=data.choices[0].message.content;h.push({role:'assistant',content:reply});renderReply(reply);saveS();if(S.webhook)fetch(S.webhook,{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',body:JSON.stringify({ts:new Date().toISOString(),client:client.name,user:text,reply})}).catch(()=>{});}
-  }catch(e){document.getElementById('ty')?.remove();showToast('Erro de ligação.','err');h.pop();}
-  S.isLoading=false;document.getElementById('sb2').disabled=false;
+    if(!res.ok){
+      const errMsg=data.error?.message||`Erro ${res.status}`;
+      showToast(errMsg,'err');
+      addMsg('ai','Erro: '+errMsg,true);
+      h.pop();
+    } else {
+      const reply=data.choices[0].message.content;
+      h.push({role:'assistant',content:reply});
+      renderReply(reply);
+      saveS();
+      if(S.webhook)fetch(S.webhook,{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',body:JSON.stringify({ts:new Date().toISOString(),client:client.name,user:text,reply})}).catch(()=>{});
+    }
+  }catch(e){
+    document.getElementById('ty')?.remove();
+    const errTxt='Erro de ligacao: '+e.message;
+    showToast(errTxt,'err');
+    addMsg('ai',errTxt,true);
+    h.pop();
+  }
+  S.isLoading=false;
+  document.getElementById('sb2').disabled=false;
 }
 
 async function analyseSocials(){
